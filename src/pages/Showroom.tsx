@@ -59,7 +59,7 @@ function CarDetailModal({ car, onClose }: { car: Car; onClose: () => void }) {
               <button 
                 key={idx} 
                 onClick={() => setActiveImageIndex(idx)}
-                className={`relative flex-shrink-0 w-24 aspect-video overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-[#063A26] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                className={`relative flex-shrink-0 w-24 aspect-video overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-[#C8102E] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
               >
                 <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
               </button>
@@ -70,45 +70,45 @@ function CarDetailModal({ car, onClose }: { car: Car; onClose: () => void }) {
         {/* Details Section */}
         <div className="w-full md:w-2/5 flex flex-col bg-white p-8">
           <div className="mb-6">
-            <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase mb-2 block">{car.make} • {car.year}</span>
-            <h2 className="text-3xl font-light tracking-wide text-[#0A110D] mb-4">{car.model}</h2>
-            <div className="text-2xl font-mono text-[#D4AF37] font-bold tracking-wider mb-4">
+            <span className="text-[10px] font-bold font-mono tracking-widest text-[#C8102E] uppercase mb-2 block">{car.make} • {car.year}</span>
+            <h2 className="text-3xl font-light tracking-wide text-[#1A1A1A] mb-4">{car.model}</h2>
+            <div className="text-2xl font-mono text-[#C8102E] font-bold tracking-wider mb-4">
               {car.priceLabel}
             </div>
-            <div className="inline-block px-3 py-1 bg-[#063A26]/5 border border-[#063A26]/20 text-[10px] font-bold tracking-widest text-[#063A26] uppercase mb-4">
+            <div className="inline-block px-3 py-1 bg-[#1A1A1A]/5 border border-[#C8102E]/20 text-[10px] font-bold tracking-widest text-[#C8102E] uppercase mb-4">
               {car.condition}
             </div>
-            <p className="text-sm text-[#4A5F54] leading-relaxed border-l-2 border-[#063A26] pl-4 italic">
+            <p className="text-sm text-[#4A5F54] leading-relaxed border-l-2 border-[#C8102E] pl-4 italic">
               {car.status}
             </p>
           </div>
 
           <div className="flex-1 overflow-y-auto mb-8">
-            <h3 className="text-xs font-bold font-mono tracking-widest text-[#0A110D] uppercase mb-4 pb-2 border-b border-[#E5E8E6]">Engine Specifications</h3>
+            <h3 className="text-xs font-bold font-mono tracking-widest text-[#1A1A1A] uppercase mb-4 pb-2 border-b border-[#E5E8E6]">Engine Specifications</h3>
             <div className="grid grid-cols-1 gap-y-4">
               <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
                 <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Engine Type</span>
-                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.type}</span>
+                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.type}</span>
               </div>
               <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
                 <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Displacement</span>
-                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.displacement}</span>
+                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.displacement}</span>
               </div>
               <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
                 <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Horsepower</span>
-                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.horsepower}</span>
+                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.horsepower}</span>
               </div>
               <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
                 <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Torque</span>
-                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.torque}</span>
+                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.torque}</span>
               </div>
               <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
                 <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Transmission</span>
-                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.transmission}</span>
+                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.transmission}</span>
               </div>
               <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
                 <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Fuel Type</span>
-                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.fuelType}</span>
+                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.fuelType}</span>
               </div>
             </div>
           </div>
@@ -118,7 +118,7 @@ function CarDetailModal({ car, onClose }: { car: Car; onClose: () => void }) {
               onClick={() => {
                   window.open(generateKunaljLink("Vehicle", `${car.year} ${car.make} ${car.model}`, `Condition: ${car.condition}, Price: ${car.priceLabel}`), '_blank');
               }}
-              className="w-full flex items-center justify-center text-[10px] font-bold tracking-wider bg-[#063A26] text-white hover:bg-[#D4AF37] hover:text-[#0A110D] transition-all py-4 uppercase shadow-md group-hover:shadow-xl group"
+              className="w-full flex items-center justify-center text-[10px] font-bold tracking-wider bg-[#1A1A1A] text-white hover:bg-[#C8102E] hover:text-[#1A1A1A] transition-all py-4 uppercase shadow-md group-hover:shadow-xl group"
             >
               <span className="mr-2">Send Inquiry to Agent</span>
               <ArrowUpRight size={14} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -184,14 +184,14 @@ export default function Showroom() {
       
       {/* Header */}
       <div className="w-full bg-white border-b border-[#E5E8E6] py-16 px-6 md:px-12 mt-4 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#063A26]/5 blur-3xl transform skew-x-12 translate-x-1/2"></div>
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#1A1A1A]/5 blur-3xl transform skew-x-12 translate-x-1/2"></div>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between md:items-end gap-6 relative z-10">
            <div>
              <div className="flex items-center gap-3 mb-3">
-               <span className="w-6 h-px bg-[#D4AF37]"></span>
-               <span className="text-[10px] font-mono tracking-widest text-[#063A26] uppercase font-bold">02 / ACTIVE INVENTORY</span>
+               <span className="w-6 h-px bg-[#C8102E]"></span>
+               <span className="text-[10px] font-mono tracking-widest text-[#C8102E] uppercase font-bold">02 / ACTIVE INVENTORY</span>
              </div>
-             <h1 className="text-4xl md:text-5xl font-light tracking-[0.02em] text-[#0A110D]">THE SHOWROOM</h1>
+             <h1 className="text-4xl md:text-5xl font-light tracking-[0.02em] text-[#1A1A1A]">THE SHOWROOM</h1>
            </div>
            <div className="text-xs font-mono text-[#4A5F54] max-w-sm">
              Browse our globally verified selection of pristine condition and premium foreign-used vehicles.
@@ -202,15 +202,15 @@ export default function Showroom() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 flex flex-col lg:flex-row gap-12">
         {/* Left Column: Sticky Sidebar Filters */}
         <aside className="lg:w-1/4 w-full">
-          <div className="sticky top-28 bg-white border border-[#E5E8E6] p-8 shadow-xl shadow-[#063A26]/5 rounded-none">
-             <div className="flex items-center space-x-3 text-[#0A110D] mb-8 pb-4 border-b border-[#E5E8E6]">
-                <SlidersHorizontal size={18} className="text-[#063A26]" />
+          <div className="sticky top-28 bg-white border border-[#E5E8E6] p-8 shadow-xl shadow-[#1A1A1A]/5 rounded-none">
+             <div className="flex items-center space-x-3 text-[#1A1A1A] mb-8 pb-4 border-b border-[#E5E8E6]">
+                <SlidersHorizontal size={18} className="text-[#C8102E]" />
                 <span className="text-sm font-bold tracking-widest uppercase">Filter Matrix</span>
              </div>
 
              {/* Condition Filter */}
              <div className="mb-8">
-               <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase block mb-4">Condition</span>
+               <span className="text-[10px] font-bold font-mono tracking-widest text-[#C8102E] uppercase block mb-4">Condition</span>
                <div className="flex flex-col space-y-4">
                  {['All', 'Brand New', 'Tokunbo'].map((cond) => (
                    <label key={cond} className="flex items-center space-x-3 cursor-pointer group">
@@ -219,9 +219,9 @@ export default function Showroom() {
                        name="condition" 
                        checked={conditionFilter === cond}
                        onChange={() => setConditionFilter(cond as any)}
-                       className="appearance-none w-4 h-4 border border-[#E5E8E6] rounded-sm checked:bg-[#063A26] checked:border-[#063A26] transition-all relative after:content-[''] after:absolute after:hidden checked:after:block after:top-[2px] after:left-[2px] after:w-2 after:h-2 after:bg-[#D4AF37]"
+                       className="appearance-none w-4 h-4 border border-[#E5E8E6] rounded-sm checked:bg-[#1A1A1A] checked:border-[#C8102E] transition-all relative after:content-[''] after:absolute after:hidden checked:after:block after:top-[2px] after:left-[2px] after:w-2 after:h-2 after:bg-[#C8102E]"
                      />
-                     <span className={`text-xs tracking-wide uppercase transition-colors font-medium ${conditionFilter === cond ? 'text-[#0A110D]' : 'text-[#4A5F54] group-hover:text-[#063A26]'}`}>{cond}</span>
+                     <span className={`text-xs tracking-wide uppercase transition-colors font-medium ${conditionFilter === cond ? 'text-[#1A1A1A]' : 'text-[#4A5F54] group-hover:text-[#C8102E]'}`}>{cond}</span>
                    </label>
                  ))}
                </div>
@@ -229,11 +229,11 @@ export default function Showroom() {
 
              {/* Make Filter */}
              <div className="mb-8">
-               <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase block mb-4">Manufacturer</span>
+               <span className="text-[10px] font-bold font-mono tracking-widest text-[#C8102E] uppercase block mb-4">Manufacturer</span>
                <select 
                  value={makeFilter}
                  onChange={(e) => setMakeFilter(e.target.value)}
-                 className="w-full bg-[#FAFAFA] border border-[#E5E8E6] text-xs font-mono text-[#0A110D] p-3 outline-none rounded-none focus:border-[#063A26] transition-colors"
+                 className="w-full bg-[#FAFAFA] border border-[#E5E8E6] text-xs font-mono text-[#1A1A1A] p-3 outline-none rounded-none focus:border-[#C8102E] transition-colors"
                >
                  <option value="All">ALL MAKES</option>
                  {uniqueMakes.map(make => (
@@ -244,7 +244,7 @@ export default function Showroom() {
              
              {/* Price Rough Filter */}
              <div>
-               <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase block mb-4">Price Tier</span>
+               <span className="text-[10px] font-bold font-mono tracking-widest text-[#C8102E] uppercase block mb-4">Price Tier</span>
                <div className="flex flex-col space-y-4">
                  {['All', 'Standard Luxury', 'Premium Elite', 'Ultra Luxury'].map((tier) => (
                    <label key={tier} className="flex items-center space-x-3 cursor-pointer group">
@@ -253,9 +253,9 @@ export default function Showroom() {
                        name="price" 
                        checked={priceFilter === tier}
                        onChange={() => setPriceFilter(tier)}
-                       className="appearance-none w-4 h-4 border border-[#E5E8E6] rounded-sm checked:bg-[#063A26] checked:border-[#063A26] transition-all relative after:content-[''] after:absolute after:hidden checked:after:block after:top-[2px] after:left-[2px] after:w-2 after:h-2 after:bg-[#D4AF37]"
+                       className="appearance-none w-4 h-4 border border-[#E5E8E6] rounded-sm checked:bg-[#1A1A1A] checked:border-[#C8102E] transition-all relative after:content-[''] after:absolute after:hidden checked:after:block after:top-[2px] after:left-[2px] after:w-2 after:h-2 after:bg-[#C8102E]"
                      />
-                     <span className={`text-xs tracking-wide uppercase transition-colors font-medium ${priceFilter === tier ? 'text-[#0A110D]' : 'text-[#4A5F54] group-hover:text-[#063A26]'}`}>{tier}</span>
+                     <span className={`text-xs tracking-wide uppercase transition-colors font-medium ${priceFilter === tier ? 'text-[#1A1A1A]' : 'text-[#4A5F54] group-hover:text-[#C8102E]'}`}>{tier}</span>
                    </label>
                  ))}
                </div>
@@ -272,7 +272,7 @@ export default function Showroom() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8">
             {loading ? (
               <div className="col-span-2 py-32 text-center text-xs font-mono tracking-widest text-[#4A5F54] uppercase">
-                <div className="w-8 h-8 rounded-full border-2 border-[#063A26] border-t-transparent animate-spin mx-auto mb-4"></div>
+                <div className="w-8 h-8 rounded-full border-2 border-[#C8102E] border-t-transparent animate-spin mx-auto mb-4"></div>
                 Synchronizing with Warehouse Node...
               </div>
             ) : filteredVehicles.length === 0 ? (
@@ -281,7 +281,7 @@ export default function Showroom() {
               </div>
             ) : (
               filteredVehicles.map((car) => (
-                <div key={car.id} className="group flex flex-col bg-white border border-[#E5E8E6] hover:border-[#063A26] transition-all duration-500 shadow-lg hover:shadow-2xl hover:-translate-y-1 overflow-hidden relative">
+                <div key={car.id} className="group flex flex-col bg-white border border-[#E5E8E6] hover:border-[#C8102E] transition-all duration-500 shadow-lg hover:shadow-2xl hover:-translate-y-1 overflow-hidden relative">
                   
                   {/* Image Block */}
                   <div className="w-full h-64 bg-[#FAFAFA] relative overflow-hidden cursor-pointer" onClick={() => setSelectedCar(car)}>
@@ -289,7 +289,7 @@ export default function Showroom() {
                       className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
                       style={{ backgroundImage: `url('${car.images[0]}')` }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A110D]/70 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/70 via-transparent to-transparent opacity-80" />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="px-6 py-2 bg-black/50 backdrop-blur text-white text-[10px] font-bold tracking-widest uppercase border border-white/20">
                         View Details
@@ -297,7 +297,7 @@ export default function Showroom() {
                     </div>
                     <div className="absolute top-4 left-4 flex gap-2">
                       {car.condition && (
-                         <span className="text-[9px] font-bold tracking-widest text-[#0A110D] bg-white px-3 py-1.5 uppercase shadow-md">
+                         <span className="text-[9px] font-bold tracking-widest text-[#1A1A1A] bg-white px-3 py-1.5 uppercase shadow-md">
                            {car.condition}
                          </span>
                       )}
@@ -307,26 +307,26 @@ export default function Showroom() {
                   {/* Metadata Block */}
                   <div className="flex flex-col flex-1 p-6 sm:p-8 z-10 relative bg-white">
                     <div className="mb-4 cursor-pointer" onClick={() => setSelectedCar(car)}>
-                      <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase mb-2 block">{car.make} • {car.year}</span>
-                      <h3 className="text-2xl font-light tracking-wide text-[#0A110D] mb-3 group-hover:text-[#063A26] transition-colors">{car.model}</h3>
+                      <span className="text-[10px] font-bold font-mono tracking-widest text-[#C8102E] uppercase mb-2 block">{car.make} • {car.year}</span>
+                      <h3 className="text-2xl font-light tracking-wide text-[#1A1A1A] mb-3 group-hover:text-[#C8102E] transition-colors">{car.model}</h3>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-6 mb-6 pt-6 border-t border-[#E5E8E6]">
                       <div>
                         <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Engine</div>
-                        <div className="text-xs font-medium text-[#0A110D] truncate" title={car.engine.type}>{car.engine.type}</div>
+                        <div className="text-xs font-medium text-[#1A1A1A] truncate" title={car.engine.type}>{car.engine.type}</div>
                       </div>
                       <div>
                         <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Fuel Type</div>
-                        <div className="text-xs font-medium text-[#0A110D]">{car.engine.fuelType}</div>
+                        <div className="text-xs font-medium text-[#1A1A1A]">{car.engine.fuelType}</div>
                       </div>
                       <div>
                         <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Transmission</div>
-                        <div className="text-xs font-medium text-[#0A110D]">{car.engine.transmission}</div>
+                        <div className="text-xs font-medium text-[#1A1A1A]">{car.engine.transmission}</div>
                       </div>
                       <div>
                         <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Status</div>
-                        <div className="text-xs font-medium text-[#0A110D] flex items-center gap-1 truncate" title={car.status}>
+                        <div className="text-xs font-medium text-[#1A1A1A] flex items-center gap-1 truncate" title={car.status}>
                           <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                           {car.status}
                         </div>
@@ -334,13 +334,13 @@ export default function Showroom() {
                     </div>
                     
                     <div className="mt-auto pt-6 border-t border-[#E5E8E6]">
-                      <div className="text-sm font-mono text-[#D4AF37] font-bold tracking-widest uppercase mb-6">
+                      <div className="text-sm font-mono text-[#C8102E] font-bold tracking-widest uppercase mb-6">
                         {car.priceLabel}
                       </div>
                       <div className="flex flex-col sm:flex-row gap-3">
                         <button 
                           onClick={() => setSelectedCar(car)}
-                          className="flex-1 flex items-center justify-center text-[10px] font-bold tracking-wider bg-[#063A26] text-white hover:bg-[#D4AF37] hover:text-[#0A110D] transition-all py-3.5 uppercase shadow-md group-hover:shadow-xl group"
+                          className="flex-1 flex items-center justify-center text-[10px] font-bold tracking-wider bg-[#1A1A1A] text-white hover:bg-[#C8102E] hover:text-[#1A1A1A] transition-all py-3.5 uppercase shadow-md group-hover:shadow-xl group"
                         >
                           <span className="mr-2">View Gallery & Specs</span>
                           <ArrowUpRight size={14} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
