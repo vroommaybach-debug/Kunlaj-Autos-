@@ -22,12 +22,12 @@ export default function PartsCenter() {
 
   // Fallback placeholder parts to show when empty
   const placeholderParts: Part[] = [
-    { id: '1', name: 'Brembo Ceramic Brake Pads', category: 'Braking System', make_compatibility: 'Universal Premium', image_url: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2000&auto=format&fit=crop' },
-    { id: '2', name: 'Michelin Pilot Sport 4S (275/35ZR21)', category: 'Tire & Wheel Fitment', make_compatibility: 'SUV / Premium Sedan', image_url: 'https://images.unsplash.com/photo-1620065096536-1e9d1a87799b?q=80&w=2000&auto=format&fit=crop' },
-    { id: '3', name: 'OEM Transmission Fluid (9-Speed)', category: 'Fluids & Maintenance', make_compatibility: 'Mercedes-Benz', image_url: 'https://images.unsplash.com/photo-1610312278520-bcc893a3ff1d?q=80&w=2000&auto=format&fit=crop' },
-    { id: '4', name: 'LED Matrix Headlamp Assembly', category: 'Lighting & Electrical', make_compatibility: 'Range Rover', image_url: 'https://images.unsplash.com/photo-1600705353037-4f81014e3b1c?q=80&w=2000&auto=format&fit=crop' },
-    { id: '5', name: 'Air Suspension Compressor', category: 'Suspension', make_compatibility: 'Lexus LX', image_url: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?q=80&w=2000&auto=format&fit=crop' },
-    { id: '6', name: 'High-Performance Alternator (150A)', category: 'Electrical', make_compatibility: 'Toyota Land Cruiser', image_url: 'https://images.unsplash.com/photo-1635815611116-e88383e5898d?q=80&w=2000&auto=format&fit=crop' },
+    { id: '1', name: 'Brembo Ceramic Brake Pads', category: 'Braking System', make_compatibility: 'Universal Premium' },
+    { id: '2', name: 'Michelin Pilot Sport 4S (275/35ZR21)', category: 'Tire & Wheel Fitment', make_compatibility: 'SUV / Premium Sedan' },
+    { id: '3', name: 'OEM Transmission Fluid (9-Speed)', category: 'Fluids & Maintenance', make_compatibility: 'Mercedes-Benz' },
+    { id: '4', name: 'LED Matrix Headlamp Assembly', category: 'Lighting & Electrical', make_compatibility: 'Range Rover' },
+    { id: '5', name: 'Air Suspension Compressor', category: 'Suspension', make_compatibility: 'Lexus LX' },
+    { id: '6', name: 'High-Performance Alternator (150A)', category: 'Electrical', make_compatibility: 'Toyota Land Cruiser' },
   ];
 
   useEffect(() => {

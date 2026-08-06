@@ -1,195 +1,150 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
 import { generateKunaljLink } from '../lib/whatsapp';
-import { SlidersHorizontal, ArrowUpRight } from 'lucide-react';
+import { SlidersHorizontal, ArrowUpRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { cars, Car } from '../lib/carsData';
 
-interface Vehicle {
-  id: string;
-  brand: string;
-  model: string;
-  price: string;
-  condition?: string;
-  img_url?: string;
-  image_url?: string; 
-  engine?: string;
-  mileage?: string;
-  transmission?: string;
-  location?: string;
+function CarDetailModal({ car, onClose }: { car: Car; onClose: () => void }) {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  // Prevent scrolling when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  const nextImage = () => {
+    setActiveImageIndex((prev) => (prev + 1) % car.images.length);
+  };
+
+  const prevImage = () => {
+    setActiveImageIndex((prev) => (prev === 0 ? car.images.length - 1 : prev - 1));
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+      
+      <div className="relative bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col md:flex-row border border-[#E5E8E6]">
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 z-20 w-10 h-10 bg-white/50 backdrop-blur flex items-center justify-center rounded-full border border-black/10 hover:bg-white transition-colors"
+        >
+          <X size={20} className="text-black" />
+        </button>
+
+        {/* Gallery Section */}
+        <div className="w-full md:w-3/5 bg-[#FAFAFA] flex flex-col">
+          {/* Main Image */}
+          <div className="relative aspect-[4/3] w-full bg-black flex items-center justify-center group overflow-hidden">
+            <img 
+              src={car.images[activeImageIndex]} 
+              alt={`${car.make} ${car.model}`}
+              className="w-full h-full object-cover"
+            />
+            
+            {/* Arrows */}
+            <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <ChevronLeft size={24} />
+            </button>
+            <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <ChevronRight size={24} />
+            </button>
+          </div>
+          
+          {/* Thumbnails */}
+          <div className="flex gap-2 p-4 overflow-x-auto bg-[#FAFAFA] border-r border-[#E5E8E6]">
+            {car.images.map((img, idx) => (
+              <button 
+                key={idx} 
+                onClick={() => setActiveImageIndex(idx)}
+                className={`relative flex-shrink-0 w-24 aspect-video overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-[#063A26] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+              >
+                <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Details Section */}
+        <div className="w-full md:w-2/5 flex flex-col bg-white p-8">
+          <div className="mb-6">
+            <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase mb-2 block">{car.make} • {car.year}</span>
+            <h2 className="text-3xl font-light tracking-wide text-[#0A110D] mb-4">{car.model}</h2>
+            <div className="text-2xl font-mono text-[#D4AF37] font-bold tracking-wider mb-4">
+              {car.priceLabel}
+            </div>
+            <div className="inline-block px-3 py-1 bg-[#063A26]/5 border border-[#063A26]/20 text-[10px] font-bold tracking-widest text-[#063A26] uppercase mb-4">
+              {car.condition}
+            </div>
+            <p className="text-sm text-[#4A5F54] leading-relaxed border-l-2 border-[#063A26] pl-4 italic">
+              {car.status}
+            </p>
+          </div>
+
+          <div className="flex-1 overflow-y-auto mb-8">
+            <h3 className="text-xs font-bold font-mono tracking-widest text-[#0A110D] uppercase mb-4 pb-2 border-b border-[#E5E8E6]">Engine Specifications</h3>
+            <div className="grid grid-cols-1 gap-y-4">
+              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Engine Type</span>
+                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.type}</span>
+              </div>
+              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Displacement</span>
+                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.displacement}</span>
+              </div>
+              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Horsepower</span>
+                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.horsepower}</span>
+              </div>
+              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Torque</span>
+                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.torque}</span>
+              </div>
+              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Transmission</span>
+                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.transmission}</span>
+              </div>
+              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Fuel Type</span>
+                <span className="text-xs font-medium text-[#0A110D] text-right">{car.engine.fuelType}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-auto pt-6 border-t border-[#E5E8E6] flex flex-col gap-3">
+            <button 
+              onClick={() => {
+                  window.open(generateKunaljLink("Vehicle", `${car.year} ${car.make} ${car.model}`, `Condition: ${car.condition}, Price: ${car.priceLabel}`), '_blank');
+              }}
+              className="w-full flex items-center justify-center text-[10px] font-bold tracking-wider bg-[#063A26] text-white hover:bg-[#D4AF37] hover:text-[#0A110D] transition-all py-4 uppercase shadow-md group-hover:shadow-xl group"
+            >
+              <span className="mr-2">Send Inquiry to Agent</span>
+              <ArrowUpRight size={14} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-const fallbackVehicles: Vehicle[] = [
-  {
-    id: "fb-1",
-    brand: "Mercedes-Benz",
-    model: "G-Class AMG 63",
-    price: "₦ 185,000,000",
-    condition: "Brand New",
-    image_url: "https://images.unsplash.com/photo-1520031441872-265e4ff70366?q=80&w=2069&auto=format&fit=crop",
-    engine: "4.0L V8 Biturbo",
-    mileage: "Delivery Mileage",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria"
-  },
-  {
-    id: "fb-2",
-    brand: "Lexus",
-    model: "LX 600 VIP",
-    price: "₦ 160,000,000",
-    condition: "Brand New",
-    image_url: "https://images.unsplash.com/photo-1563720225384-9c0f12f928e3?q=80&w=2000&auto=format&fit=crop",
-    engine: "3.5L V6 Twin-Turbo",
-    mileage: "Delivery Mileage",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria"
-  },
-  {
-    id: "fb-3",
-    brand: "Range Rover",
-    model: "Autobiography",
-    price: "₦ 190,000,000",
-    condition: "Brand New",
-    image_url: "https://images.unsplash.com/photo-1566367576585-051277d52997?q=80&w=2000&auto=format&fit=crop",
-    engine: "4.4L V8",
-    mileage: "Delivery Mileage",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria"
-  },
-  {
-    id: "fb-4",
-    brand: "Toyota",
-    model: "Land Cruiser 300 Series",
-    price: "₦ 135,000,000",
-    condition: "Brand New",
-    image_url: "https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=2072&auto=format&fit=crop",
-    engine: "3.5L V6 Twin-Turbo",
-    mileage: "Delivery Mileage",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria"
-  },
-  {
-    id: "fb-5",
-    brand: "Mercedes-Benz",
-    model: "GLE 450",
-    price: "₦ 85,000,000",
-    condition: "Tokunbo",
-    image_url: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2070&auto=format&fit=crop",
-    engine: "3.0L Inline-6",
-    mileage: "35,000 mi",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria",
-  },
-  {
-    id: "fb-6",
-    brand: "Lexus",
-    model: "RX 350 F-Sport",
-    price: "₦ 58,000,000",
-    condition: "Tokunbo",
-    image_url: "https://images.unsplash.com/photo-1563720225384-9c0f12f928e3?q=80&w=2000&auto=format&fit=crop",
-    engine: "3.5L V6",
-    mileage: "42,000 mi",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria",
-  },
-  {
-    id: "fb-7",
-    brand: "Toyota",
-    model: "Prado TXL",
-    price: "₦ 48,000,000",
-    condition: "Tokunbo",
-    image_url: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2070&auto=format&fit=crop",
-    engine: "2.7L 4-Cylinder",
-    mileage: "50,000 mi",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria",
-  },
-  {
-    id: "fb-8",
-    brand: "Range Rover",
-    model: "Velar",
-    price: "₦ 72,000,000",
-    condition: "Tokunbo",
-    image_url: "https://images.unsplash.com/photo-1566367576585-051277d52997?q=80&w=2000&auto=format&fit=crop",
-    engine: "2.0L 4-Cylinder Turbo",
-    mileage: "28,000 mi",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria",
-  },
-  {
-    id: "fb-9",
-    brand: "Mercedes-Benz",
-    model: "S-Class 580",
-    price: "₦ 150,000,000",
-    condition: "Tokunbo",
-    image_url: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2070&auto=format&fit=crop",
-    engine: "4.0L V8 Biturbo",
-    mileage: "18,000 mi",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria",
-  },
-  {
-    id: "fb-10",
-    brand: "Honda",
-    model: "Accord Touring",
-    price: "₦ 28,000,000",
-    condition: "Tokunbo",
-    image_url: "https://images.unsplash.com/photo-1605816988069-b11383b50717?q=80&w=2070&auto=format&fit=crop",
-    engine: "2.0L Turbo 4-Cylinder",
-    mileage: "65,000 mi",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria",
-  },
-  {
-    id: "fb-11",
-    brand: "Toyota",
-    model: "Hilux V8",
-    price: "₦ 45,000,000",
-    condition: "Brand New",
-    image_url: "https://images.unsplash.com/photo-1621004511394-1a3b1a2ee7b2?q=80&w=2070&auto=format&fit=crop",
-    engine: "2.8L Diesel",
-    mileage: "Delivery Mileage",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria"
-  },
-  {
-    id: "fb-12",
-    brand: "Lexus",
-    model: "GX 460",
-    price: "₦ 62,000,000",
-    condition: "Tokunbo",
-    image_url: "https://images.unsplash.com/photo-1615655787680-92bdab68a73a?q=80&w=2070&auto=format&fit=crop",
-    engine: "4.6L V8",
-    mileage: "48,000 mi",
-    transmission: "Automatic",
-    location: "Lagos, Nigeria"
-  }
-];
-
 export default function Showroom() {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [vehicles, setVehicles] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   
   // Filter States
   const [conditionFilter, setConditionFilter] = useState<'All' | 'Brand New' | 'Tokunbo'>('All');
   const [makeFilter, setMakeFilter] = useState<string>('All');
-  const [priceFilter, setPriceFilter] = useState<string>('All'); // Rough mapping
+  const [priceFilter, setPriceFilter] = useState<string>('All');
 
   useEffect(() => {
-    async function fetchVehicles() {
-      setLoading(true);
-      const { data, error } = await supabase.from('vehicles').select('*');
-      if (!error && data) {
-        setVehicles([...fallbackVehicles, ...data]);
-      } else {
-        setVehicles([...fallbackVehicles]);
-      }
-      setLoading(false);
-    }
-    fetchVehicles();
+    // Replaced supabase fetch with local data import
+    setVehicles(cars);
+    setLoading(false);
   }, []);
-
-  const getImageUrl = (v: Vehicle) => {
-    return v.img_url || v.image_url || "https://images.unsplash.com/photo-1520031441872-265e4ff70366?q=80&w=2069&auto=format&fit=crop";
-  };
 
   const filteredVehicles = vehicles.filter(v => {
     const vCond = v.condition ? v.condition.toLowerCase() : '';
@@ -205,16 +160,28 @@ export default function Showroom() {
     // Make match
     let makeMatch = true;
     if (makeFilter !== 'All') {
-      makeMatch = v.brand.toLowerCase() === makeFilter.toLowerCase();
+      makeMatch = v.make.toLowerCase() === makeFilter.toLowerCase();
     }
 
-    return condMatch && makeMatch;
+    // Rough price match (assuming standard tiers)
+    let priceMatch = true;
+    if (priceFilter === 'Standard Luxury') {
+      priceMatch = v.price < 20000000;
+    } else if (priceFilter === 'Premium Elite') {
+      priceMatch = v.price >= 20000000 && v.price < 50000000;
+    } else if (priceFilter === 'Ultra Luxury') {
+      priceMatch = v.price >= 50000000;
+    }
+
+    return condMatch && makeMatch && priceMatch;
   });
 
-  const uniqueMakes = Array.from(new Set(vehicles.map(v => v.brand))).filter(Boolean);
+  const uniqueMakes = Array.from(new Set(vehicles.map(v => v.make))).filter(Boolean);
 
   return (
     <div className="w-full bg-[#FAFAFA] min-h-screen py-16">
+      {selectedCar && <CarDetailModal car={selectedCar} onClose={() => setSelectedCar(null)} />}
+      
       {/* Header */}
       <div className="w-full bg-white border-b border-[#E5E8E6] py-16 px-6 md:px-12 mt-4 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-[#063A26]/5 blur-3xl transform skew-x-12 translate-x-1/2"></div>
@@ -317,12 +284,17 @@ export default function Showroom() {
                 <div key={car.id} className="group flex flex-col bg-white border border-[#E5E8E6] hover:border-[#063A26] transition-all duration-500 shadow-lg hover:shadow-2xl hover:-translate-y-1 overflow-hidden relative">
                   
                   {/* Image Block */}
-                  <div className="w-full h-64 bg-[#FAFAFA] relative overflow-hidden">
+                  <div className="w-full h-64 bg-[#FAFAFA] relative overflow-hidden cursor-pointer" onClick={() => setSelectedCar(car)}>
                     <div 
                       className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${getImageUrl(car)}')` }}
+                      style={{ backgroundImage: `url('${car.images[0]}')` }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A110D]/70 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="px-6 py-2 bg-black/50 backdrop-blur text-white text-[10px] font-bold tracking-widest uppercase border border-white/20">
+                        View Details
+                      </div>
+                    </div>
                     <div className="absolute top-4 left-4 flex gap-2">
                       {car.condition && (
                          <span className="text-[9px] font-bold tracking-widest text-[#0A110D] bg-white px-3 py-1.5 uppercase shadow-md">
@@ -334,56 +306,45 @@ export default function Showroom() {
 
                   {/* Metadata Block */}
                   <div className="flex flex-col flex-1 p-6 sm:p-8 z-10 relative bg-white">
-                    <div className="mb-4">
-                      <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase mb-2 block">{car.brand}</span>
-                      <h3 className="text-2xl font-light tracking-wide text-[#0A110D] mb-3">{car.model}</h3>
+                    <div className="mb-4 cursor-pointer" onClick={() => setSelectedCar(car)}>
+                      <span className="text-[10px] font-bold font-mono tracking-widest text-[#063A26] uppercase mb-2 block">{car.make} • {car.year}</span>
+                      <h3 className="text-2xl font-light tracking-wide text-[#0A110D] mb-3 group-hover:text-[#063A26] transition-colors">{car.model}</h3>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-6 mb-6 pt-6 border-t border-[#E5E8E6]">
                       <div>
                         <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Engine</div>
-                        <div className="text-xs font-medium text-[#0A110D]">{car.engine || "Standard"}</div>
+                        <div className="text-xs font-medium text-[#0A110D] truncate" title={car.engine.type}>{car.engine.type}</div>
                       </div>
                       <div>
-                        <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Mileage</div>
-                        <div className="text-xs font-medium text-[#0A110D]">{car.mileage || "N/A"}</div>
+                        <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Fuel Type</div>
+                        <div className="text-xs font-medium text-[#0A110D]">{car.engine.fuelType}</div>
                       </div>
                       <div>
                         <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Transmission</div>
-                        <div className="text-xs font-medium text-[#0A110D]">{car.transmission || "Automatic"}</div>
+                        <div className="text-xs font-medium text-[#0A110D]">{car.engine.transmission}</div>
                       </div>
                       <div>
-                        <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Location</div>
-                        <div className="text-xs font-medium text-[#0A110D] flex items-center gap-1">
+                        <div className="text-[9px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase mb-1">Status</div>
+                        <div className="text-xs font-medium text-[#0A110D] flex items-center gap-1 truncate" title={car.status}>
                           <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                          {car.location || "Lagos HQ"}
+                          {car.status}
                         </div>
                       </div>
                     </div>
                     
                     <div className="mt-auto pt-6 border-t border-[#E5E8E6]">
                       <div className="text-sm font-mono text-[#D4AF37] font-bold tracking-widest uppercase mb-6">
-                        {car.price || 'REQUEST QUOTE'}
+                        {car.priceLabel}
                       </div>
                       <div className="flex flex-col sm:flex-row gap-3">
                         <button 
-                          onClick={() => {
-                             window.open(generateKunaljLink("Vehicle", `${car.brand} ${car.model}`, `Condition: ${car.condition || 'Unknown'}`), '_blank');
-                          }}
+                          onClick={() => setSelectedCar(car)}
                           className="flex-1 flex items-center justify-center text-[10px] font-bold tracking-wider bg-[#063A26] text-white hover:bg-[#D4AF37] hover:text-[#0A110D] transition-all py-3.5 uppercase shadow-md group-hover:shadow-xl group"
                         >
-                          <span className="mr-2">Initiate Inquiry</span>
+                          <span className="mr-2">View Gallery & Specs</span>
                           <ArrowUpRight size={14} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </button>
-                        <a 
-                          href="https://jiji.ng/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center text-[10px] font-bold tracking-wider border border-[#E5E8E6] text-[#0A110D] bg-[#FAFAFA] hover:border-[#063A26] transition-all py-3.5 uppercase group"
-                        >
-                          <span className="mr-2">Buy on Jiji</span>
-                          <ArrowUpRight size={14} className="text-[#063A26]" />
-                        </a>
                       </div>
                     </div>
                   </div>

@@ -2,35 +2,36 @@ import { motion, useScroll, useTransform } from "motion/react";
 import React, { useRef } from "react";
 import { ArrowUpRight, MessageCircle, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import { cars } from "../lib/carsData";
 
 const SUCCESS_STORIES = [
   {
     id: 1,
     client: "Mr. O. from Ikoyi",
-    vehicle: "Mercedes-Benz G63 AMG",
+    vehicle: "Toyota Highlander 2016",
     quote: "KUNLAJ delivered exactly what they promised. The duty was fully cleared and the car was immaculate.",
-    context: "Sourced directly from our German partners, Mr. O wanted a pristine G63 within 14 days. We delivered in 9.",
-    imageUrl: "https://images.unsplash.com/photo-1520031441872-265e4ff70366?q=80&w=2069&auto=format&fit=crop",
+    context: "Sourced directly, Mr. O wanted a pristine Highlander within 14 days. We delivered in 9.",
+    imageUrl: cars[0].images[0],
     price: "Confidential",
     date: "August 2025"
   },
   {
     id: 2,
     client: "Mrs. V",
-    vehicle: "Range Rover Autobiography",
+    vehicle: "Mercedes-Benz C300 2016",
     quote: "I texted them on a Thursday, by Saturday I was test driving it. Incredibly professional.",
-    context: "Mrs. V needed a luxury SUV with armored options. We had this stunning Autobiography in our Lagos showroom ready for deployment.",
-    imageUrl: "https://images.unsplash.com/photo-1566367576585-051277d52997?q=80&w=2000&auto=format&fit=crop",
-    price: "₦ 190,000,000",
+    context: "Mrs. V needed a luxury vehicle. We had this stunning C300 in our Lagos showroom ready for deployment.",
+    imageUrl: cars[2].images[0],
+    price: "₦ 12,800,000",
     date: "October 2025"
   },
   {
     id: 3,
     client: "Chief A.",
-    vehicle: "Lexus LX 600",
+    vehicle: "Hyundai Santa Fe Sport 2015",
     quote: "The only dealership I trust in Lagos for genuine foreign-used vehicles without hidden stories.",
-    context: "Chief A. requested the ultra-luxury LX 600 VIP edition. We handled everything from port clearance to home delivery.",
-    imageUrl: "https://images.unsplash.com/photo-1627454820516-dc76715ea51c?q=80&w=2070&auto=format&fit=crop",
+    context: "Chief A. requested this vehicle. We handled everything from port clearance to home delivery.",
+    imageUrl: cars[1].images[0],
     price: "Confidential",
     date: "January 2026"
   }
@@ -50,7 +51,7 @@ export default function SoldArchive() {
         <motion.div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=2070&auto=format&fit=crop')",
+            backgroundImage: `url('${cars[3].images[1]}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             opacity: useTransform(scrollYProgress, [0, 0.2], [0.5, 0])

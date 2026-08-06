@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import { cars } from "../lib/carsData";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <section className="relative w-full h-[85vh] lg:h-[90vh]">
         <div 
           className="absolute top-0 right-0 w-full lg:w-[85%] h-full bg-cover bg-center transition-transform duration-1000"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=2069&auto=format&fit=crop')" }}
+          style={{ backgroundImage: `url('${cars[2].images[1]}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/95 lg:via-[#FAFAFA]/60 to-[#063A26]/20 z-10 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/90 lg:via-[#FAFAFA]/80 to-transparent z-10" />
@@ -56,17 +57,19 @@ export default function Home() {
 
         {/* Floating Glassmorphism Spec Card - Optimized for Mobile */}
         <div className="absolute bottom-6 left-6 right-6 md:right-auto md:w-[340px] md:bottom-12 md:left-12 lg:left-24 z-30 bg-white/70 backdrop-blur-3xl border border-white p-4 shadow-[0_20px_50px_rgba(6,58,38,0.15)] overflow-hidden group cursor-pointer hover:bg-white transition-all transform hover:-translate-y-2">
-          <div className="absolute top-0 left-0 w-1 h-full bg-[#063A26]"></div>
-          <div className="flex gap-4 items-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FAFAFA] overflow-hidden shrink-0 border border-[#E5E8E6]">
-              <img src="https://images.unsplash.com/photo-1520031441872-265e4ff70366?q=80&w=2069&auto=format&fit=crop" alt="Mercedes Benz" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          <Link to="/showroom" className="block">
+            <div className="absolute top-0 left-0 w-1 h-full bg-[#063A26]"></div>
+            <div className="flex gap-4 items-center">
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FAFAFA] overflow-hidden shrink-0 border border-[#E5E8E6]">
+                <img src={cars[0].images[0]} alt={`${cars[0].make} ${cars[0].model}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+              </div>
+              <div>
+                <div className="text-[9px] md:text-[10px] font-mono tracking-widest text-[#D4AF37] mb-1 font-bold">FEATURED SPEC</div>
+                <div className="text-sm md:text-base font-semibold text-[#0A110D] tracking-wide truncate">{cars[0].make} {cars[0].model}</div>
+                <div className="text-[10px] md:text-xs text-[#4A5F54] mt-1 font-medium truncate">{cars[0].condition}</div>
+              </div>
             </div>
-            <div>
-              <div className="text-[9px] md:text-[10px] font-mono tracking-widest text-[#D4AF37] mb-1 font-bold">FEATURED SPEC</div>
-              <div className="text-sm md:text-base font-semibold text-[#0A110D] tracking-wide">Mercedes G-Class AMG 63</div>
-              <div className="text-[10px] md:text-xs text-[#4A5F54] mt-1 font-medium">Accident Free • Lagos</div>
-            </div>
-          </div>
+          </Link>
         </div>
       </section>
 
@@ -110,7 +113,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:grid-rows-2 md:h-[600px]">
           {/* Main Large Tile */}
           <Link to="/showroom?category=suv" className="md:col-span-2 md:row-span-2 relative group overflow-hidden bg-white shadow-xl flex flex-col justify-end p-8 border border-[#E5E8E6] hover:border-[#063A26] transition-colors">
-            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1566367576585-051277d52997?q=80&w=2000&auto=format&fit=crop')" }} />
+            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: `url('${cars[0].images[2]}')` }} />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A110D]/90 via-[#0A110D]/20 to-transparent" />
             <div className="relative z-10 transform transition-transform duration-500 group-hover:-translate-y-2">
                <span className="inline-block px-3 py-1 bg-[#D4AF37] text-[#0A110D] text-[9px] font-bold tracking-widest uppercase mb-3">Most Popular</span>
@@ -121,7 +124,7 @@ export default function Home() {
 
           {/* Secondary Tile Top */}
           <Link to="/showroom?category=sedan" className="md:col-span-2 relative group overflow-hidden bg-white shadow-md flex flex-col justify-end p-6 border border-[#E5E8E6] hover:border-[#063A26] transition-colors">
-            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=2070&auto=format&fit=crop')" }} />
+            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: `url('${cars[2].images[2]}')` }} />
              <div className="absolute inset-0 bg-gradient-to-t from-[#0A110D]/90 via-[#0A110D]/10 to-transparent" />
              <div className="relative z-10 transform transition-transform duration-500 group-hover:-translate-y-1">
                <h3 className="text-2xl font-medium tracking-wide text-white mb-1">Executive Sedans</h3>
@@ -131,7 +134,7 @@ export default function Home() {
 
           {/* Small Tile Bottom Left */}
           <Link to="/showroom?category=truck" className="relative group overflow-hidden bg-white shadow-md flex flex-col justify-end p-6 border border-[#E5E8E6] hover:border-[#063A26] transition-colors">
-            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2070&auto=format&fit=crop')" }} />
+            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: `url('${cars[4].images[0]}')` }} />
              <div className="absolute inset-0 bg-gradient-to-t from-[#0A110D]/90 to-transparent" />
              <div className="relative z-10">
                <h3 className="text-lg font-medium tracking-wide text-white">Trucks</h3>
@@ -141,7 +144,7 @@ export default function Home() {
 
           {/* Small Tile Bottom Right */}
           <Link to="/showroom?category=hybrid" className="relative group overflow-hidden bg-white shadow-md flex flex-col justify-end p-6 border border-[#E5E8E6] hover:border-[#063A26] transition-colors">
-            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1593941707882-a5bba14938cb?q=80&w=2072&auto=format&fit=crop')" }} />
+            <div className="absolute inset-0 bg-[#FAFAFA] bg-cover bg-center opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" style={{ backgroundImage: `url('${cars[1].images[0]}')` }} />
              <div className="absolute inset-0 bg-gradient-to-t from-[#0A110D]/90 to-transparent" />
              <div className="relative z-10">
                <h3 className="text-lg font-medium tracking-wide text-white">Hybrid / EV</h3>

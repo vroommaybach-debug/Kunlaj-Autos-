@@ -1,5 +1,6 @@
 import { generateKunaljLink } from '../lib/whatsapp';
 import { ArrowUpRight } from 'lucide-react';
+import { cars } from '../lib/carsData';
 
 export default function ServiceDesk() {
   const packages = [
@@ -7,19 +8,19 @@ export default function ServiceDesk() {
       title: "Diagnostic Scan",
       desc: "Complete digital telemetry review and fault code extraction via certified OBD-II scanners. Identifies engine, transmission, and electrical discrepancies.",
       price: "System Inspection",
-      image: "https://images.unsplash.com/photo-1590226487106-95ff8c2b7dfb?q=80&w=2074&auto=format&fit=crop"
+      image: cars[5].images[0]
     },
     {
       title: "Logistics Camp Routine Service",
       desc: "High-tier routine execution, premium synthetic oil change, fluid standardization, and full filter replacement. Perfect for 5K/10K mileage intervals.",
       price: "Routine Maintenance",
-      image: "https://images.unsplash.com/photo-1632823469850-9d5de41b9de1?q=80&w=2070&auto=format&fit=crop"
+      image: cars[6].images[0]
     },
     {
       title: "Full Overhaul",
       desc: "Comprehensive mechanical strip-down, structural integrity checks, and precision reassembly. Reserved for complex transmission jobs and major engine rebuilds.",
       price: "Advanced Operations",
-      image: "https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=1974&auto=format&fit=crop"
+      image: cars[4].images[0]
     }
   ];
 
