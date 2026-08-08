@@ -354,6 +354,26 @@ export default function Showroom() {
           </div>
         </div>
       </div>
+
+      {/* Custom Quotation Request - Integrated into Showroom */}
+      <section className="border-t border-[#E5E8E6] bg-white py-24 relative overflow-hidden mt-12">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#1A1A1A]/5 blur-3xl transform skew-x-12 translate-x-1/2"></div>
+        <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10 text-center">
+          <h2 className="text-3xl md:text-5xl font-light tracking-[0.02em] text-[#1A1A1A] mb-4">CAN'T FIND WHAT YOU'RE LOOKING FOR?</h2>
+          <p className="text-sm md:text-base text-[#4A5F54] font-normal leading-relaxed mb-10 max-w-2xl mx-auto">
+            Our active inventory is just a fraction of what we have access to. Request a custom quote and our sourcing team will find the exact make, model, and trim you desire.
+          </p>
+          <button 
+            onClick={() => {
+              window.open(generateKunaljLink("Custom Request from Showroom", "Specific Vehicle Quotation", "Looking for a custom import/quote"), '_blank');
+            }}
+            className="inline-flex justify-center items-center space-x-3 bg-[#C8102E] text-white text-xs font-bold tracking-wider uppercase px-10 py-5 hover:bg-[#1A1A1A] transition-colors shadow-2xl relative overflow-hidden group"
+          >
+            <span className="relative z-10">Request a Custom Quote</span>
+            <ArrowUpRight size={16} className="relative z-10 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </button>
+        </div>
+      </section>
     </div>
   );
 }

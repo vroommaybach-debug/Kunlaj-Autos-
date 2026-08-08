@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, MessageSquare, CarFront } from "lucide-react";
 import { cars } from "../lib/carsData";
+import { generateKunaljLink } from "../lib/whatsapp";
 
 export default function Home() {
   return (
@@ -154,6 +155,29 @@ export default function Home() {
         </div>
       </section>
       
+      {/* Custom Quotation Request */}
+      <section className="border-t border-[#E5E8E6] bg-white py-24 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-[#1A1A1A]/5 blur-3xl transform skew-x-12 translate-x-1/2"></div>
+        <div className="max-w-4xl mx-auto px-6 md:px-12 relative z-10 text-center">
+          <div className="w-16 h-16 mx-auto bg-[#FAFAFA] border border-[#E5E8E6] flex items-center justify-center text-[#C8102E] mb-6">
+            <CarFront size={32} />
+          </div>
+          <h2 className="text-3xl md:text-5xl font-light tracking-[0.02em] text-[#1A1A1A] mb-4">REQUEST A CUSTOM QUOTE</h2>
+          <p className="text-sm md:text-base text-[#4A5F54] font-normal leading-relaxed mb-10 max-w-2xl mx-auto">
+            Have a specific vehicle in mind? Whether it's a rare spec, a specific trim, or a customized armored vehicle, our sourcing network can acquire it for you. Direct import, full customs clearance, zero hassle.
+          </p>
+          <button 
+            onClick={() => {
+              window.open(generateKunaljLink("Custom Request", "Specific Vehicle Quotation", "Looking for a custom import/quote"), '_blank');
+            }}
+            className="inline-flex justify-center items-center space-x-3 bg-[#C8102E] text-white text-xs font-bold tracking-wider uppercase px-10 py-5 hover:bg-[#1A1A1A] transition-colors shadow-2xl relative overflow-hidden group"
+          >
+            <MessageSquare size={16} className="relative z-10 transform group-hover:scale-110 transition-transform" />
+            <span className="relative z-10">Inquire via WhatsApp</span>
+          </button>
+        </div>
+      </section>
+
       {/* Jiji Trust Banner */}
       <section className="bg-gradient-to-br from-[#1A1A1A] to-[#0D4F36] py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#C8102E] rounded-full blur-3xl opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>

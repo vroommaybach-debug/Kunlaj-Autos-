@@ -176,33 +176,32 @@ export default function PartsCenter() {
                 .map((part) => (
               <div key={part.id} className="bg-white border border-[#E5E8E6] flex flex-col group hover:border-[#C8102E] hover:shadow-2xl transition-all duration-500 relative transform hover:-translate-y-1">
                 {/* Visual Block */}
-                <div className="w-full h-56 bg-[#FAFAFA] relative overflow-hidden flex items-center justify-center p-4">
-                  {part.image_url ? (
-                    <img src={part.image_url} alt={part.name} className="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-                  ) : (
-                    <div className="w-full h-full bg-[#E5E8E6]/30 flex flex-col items-center justify-center">
-                       <Cog size={32} className="text-[#4A5F54]/50 mb-2" />
-                       <div className="text-[#4A5F54]/50 font-mono text-[9px] uppercase tracking-widest font-bold">Image Schema Void</div>
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute top-4 right-4 text-[9px] font-mono text-[#C8102E] font-bold bg-white border border-[#E5E8E6] px-3 py-1.5 shadow-md uppercase">
+                <div className="p-6 pb-0 flex items-start justify-between">
+                  <div className="w-12 h-12 bg-[#FAFAFA] border border-[#E5E8E6] flex items-center justify-center text-[#C8102E] group-hover:bg-[#C8102E] group-hover:text-[#FAFAFA] transition-colors">
+                    <Cog size={20} className={part.category === 'Engine Parts' || part.category === 'Model-Specific Parts' ? 'animate-[spin_4s_linear_infinite]' : ''} />
+                  </div>
+                  <div className="text-[9px] font-mono text-[#C8102E] font-bold bg-[#FAFAFA] border border-[#E5E8E6] px-3 py-1.5 shadow-sm uppercase group-hover:border-[#C8102E]">
                     {part.category || 'Component'}
                   </div>
                 </div>
 
                 {/* Data Block */}
-                <div className="p-6 flex flex-col flex-1 border-t border-[#E5E8E6] bg-white relative z-10">
-                  <h4 className="text-xl font-light text-[#1A1A1A] tracking-wide mb-2">{part.name}</h4>
-                  <div className="text-[10px] font-mono font-bold tracking-widest text-[#C8102E] uppercase mb-6">{part.make_compatibility}</div>
+                <div className="p-6 flex flex-col flex-1 bg-white relative z-10">
+                  <h4 className="text-xl font-light text-[#1A1A1A] tracking-wide mb-3">{part.name}</h4>
+                  <div className="text-[10px] font-mono font-bold tracking-widest text-[#4A5F54] uppercase mb-1">Make: <span className="text-[#1A1A1A]">{part.make_compatibility || 'Universal'}</span></div>
+                  {part.model_compatibility ? (
+                    <div className="text-[10px] font-mono font-bold tracking-widest text-[#4A5F54] uppercase mb-6">Model: <span className="text-[#1A1A1A]">{part.model_compatibility}</span></div>
+                  ) : (
+                    <div className="mb-6"></div>
+                  )}
                   
-                  <div className="mt-auto">
+                  <div className="mt-auto pt-4 border-t border-[#E5E8E6] border-dashed">
                     <button 
                       onClick={() => {
                         const context = `Context YMM: ${year || 'Any Year'} ${make || 'Any Make'} ${model || 'Any Model'}`;
                         window.open(generateKunaljLink("Part", part.name, context), '_blank');
                       }}
-                      className="w-full py-4 bg-[#1A1A1A] text-center text-[10px] font-bold tracking-widest text-[#FAFAFA] hover:bg-[#C8102E] hover:text-[#1A1A1A] transition-all flex items-center justify-center space-x-2 shadow-md group-hover:shadow-lg"
+                      className="w-full py-4 bg-[#1A1A1A] text-center text-[10px] font-bold tracking-widest text-[#FAFAFA] hover:bg-[#C8102E] transition-all flex items-center justify-center space-x-2 shadow-md group"
                     >
                       <MessageSquare size={13} className="transform group-hover:-translate-y-[1px] transition-transform" />
                       <span>REQUEST PROVISION</span>
