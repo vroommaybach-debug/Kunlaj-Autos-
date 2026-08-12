@@ -51,8 +51,8 @@ export const cars: Car[] = [
     year: 2015,
     condition: "Spot (Nigeria Used)",
     status: "Working perfectly, good engine and gear, A/C working ok",
-    price: 11500000,
-    priceLabel: "₦11,500,000",
+    price: 9800000,
+    priceLabel: "₦9,800,000",
     engine: {
       type: "2.4L Inline-4, DOHC",
       displacement: "2.4L",
@@ -76,8 +76,8 @@ export const cars: Car[] = [
     year: 2016,
     condition: "Tokunbo, Standard",
     status: "Working perfectly, good engine and gear, A/C working ok",
-    price: 12800000,
-    priceLabel: "₦12,800,000",
+    price: 10800000,
+    priceLabel: "₦10,800,000",
     engine: {
       type: "2.0L Turbo Inline-4",
       displacement: "2.0L",
@@ -176,8 +176,8 @@ export const cars: Car[] = [
     year: 2001,
     condition: "Foreign Used",
     status: "Working perfectly, good engine",
-    price: 8500000,
-    priceLabel: "₦8,500,000",
+    price: 7800000,
+    priceLabel: "₦7,800,000",
     engine: {
       type: "2.4L Inline-4 Petrol",
       displacement: "2.4L",
