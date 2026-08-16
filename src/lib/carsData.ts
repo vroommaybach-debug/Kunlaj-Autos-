@@ -217,6 +217,12 @@ export const cars: Car[] = [
       transmission: "4-speed automatic",
       fuelType: "Petrol",
     },
-    images: [],
+    images: [
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Rav401.jpg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Rav402.jpg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Rav403.jpg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Rav404.jpg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Rav405.jpg"
+    ],
   },
 ];

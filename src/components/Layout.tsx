@@ -15,12 +15,12 @@ export default function Layout({ children }: LayoutProps) {
     <div className="bg-[#FAFAFA] text-[#1A1A1A] min-h-screen flex flex-col font-sans selection:bg-[#1A1A1A] selection:text-[#FAFAFA] antialiased transition-colors duration-500">
       <header className="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-xl border-b bg-white/80 border-[#E5E8E6] px-6 py-4 md:px-12 transition-colors duration-300">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link to="/" className="text-xl font-bold tracking-[0.2em] relative flex items-center">
-            <span className="text-[#C8102E]">KUNLAJ&nbsp;</span>
-            <span className="relative flex items-center">
-              <span className="animate-speed-off text-[#1A1A1A] font-light">AUTOS</span>
-              <span className="animate-smoke flex items-center justify-center">☁️</span>
-            </span>
+          <Link to="/" className="flex items-center">
+            <img 
+              src="https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Kunlaj%20Autos%20Header.png"
+              alt="Kunlaj Autos Logo"
+              className="h-8 md:h-10 w-auto object-contain"
+            />
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8 text-xs font-medium tracking-[0.15em]">
