@@ -4,36 +4,18 @@ import { ArrowUpRight, MessageCircle, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cars } from "../lib/carsData";
 
+const hiace = cars.find(c => c.id === 'toyota-hiace-2001');
+
 const SUCCESS_STORIES = [
   {
     id: 1,
-    client: "Mr. O. from Ikoyi",
-    vehicle: "Toyota Highlander 2016",
-    quote: "KUNLAJ delivered exactly what they promised. The duty was fully cleared and the car was immaculate.",
-    context: "Sourced directly, Mr. O wanted a pristine Highlander within 14 days. We delivered in 9.",
-    imageUrl: cars[0].images[0],
-    price: "Confidential",
-    date: "August 2025"
-  },
-  {
-    id: 2,
-    client: "Mrs. V",
-    vehicle: "Mercedes-Benz C300 2016",
-    quote: "I texted them on a Thursday, by Saturday I was test driving it. Incredibly professional.",
-    context: "Mrs. V needed a luxury vehicle. We had this stunning C300 in our Lagos showroom ready for deployment.",
-    imageUrl: cars[2].images[0],
-    price: "₦ 12,800,000",
-    date: "October 2025"
-  },
-  {
-    id: 3,
-    client: "Chief A.",
-    vehicle: "Hyundai Santa Fe Sport 2015",
-    quote: "The only dealership I trust in Lagos for genuine foreign-used vehicles without hidden stories.",
-    context: "Chief A. requested this vehicle. We handled everything from port clearance to home delivery.",
-    imageUrl: cars[1].images[0],
-    price: "Confidential",
-    date: "January 2026"
+    client: "Verified Buyer",
+    vehicle: "Toyota Hiace 2001",
+    quote: "A perfectly working engine and a seamless transaction. Very satisfied with the reliable delivery.",
+    context: "Sourced for a client who needed a dependable commercial bus. We delivered this foreign-used Hiace in excellent mechanical condition.",
+    imageUrl: hiace?.images[0] || "",
+    price: "₦ 7,800,000",
+    date: "August 2026"
   }
 ];
 

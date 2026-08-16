@@ -16,6 +16,9 @@ export interface Car {
     fuelType: string;
   };
   images: string[];
+  isSoldOut?: boolean;
+  saleMessage?: string;
+  location?: string;
 }
 
 export const cars: Car[] = [
@@ -178,6 +181,8 @@ export const cars: Car[] = [
     status: "Working perfectly, good engine",
     price: 7800000,
     priceLabel: "₦7,800,000",
+    isSoldOut: true,
+    saleMessage: "SOLD OUT - A Great Sale for the Buyer!",
     engine: {
       type: "2.4L Inline-4 Petrol",
       displacement: "2.4L",
@@ -193,5 +198,25 @@ export const cars: Car[] = [
       "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Hiace04.jpg",
       "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/Hiace05.jpg",
     ],
+  },
+  {
+    id: "toyota-rav4-2007",
+    make: "Toyota",
+    model: "RAV4",
+    year: 2007,
+    condition: "Nigeria Used",
+    status: "Working perfectly with good engine and gear (A/C is not cooling)",
+    price: 3800000,
+    priceLabel: "₦3,800,000",
+    location: "Iyana Ipaja, Lagos",
+    engine: {
+      type: "2.4L Inline-4",
+      displacement: "2.4L",
+      horsepower: "166 hp",
+      torque: "165 lb-ft",
+      transmission: "4-speed automatic",
+      fuelType: "Petrol",
+    },
+    images: [],
   },
 ];
