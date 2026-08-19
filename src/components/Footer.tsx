@@ -44,7 +44,7 @@ export default function Footer() {
           <ul className="space-y-3 text-xs tracking-wide text-white/70">
             <li><Link to="/legal" className="hover:text-[#FAFAFA] transition-colors">Privacy Policy</Link></li>
             <li><Link to="/legal" className="hover:text-[#FAFAFA] transition-colors">Terms of Service</Link></li>
-            <li><a href="https://jiji.ng/" target="_blank" rel="noopener noreferrer" className="hover:text-[#FAFAFA] flex items-center gap-2 transition-colors"><span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> Verified Jiji Seller</a></li>
+            <li><a href="https://wa.me/2348038587752" target="_blank" rel="noopener noreferrer" className="hover:text-[#FAFAFA] flex items-center gap-2 transition-colors"><span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> Verified Enterprise Seller</a></li>
             <li className="pt-2 text-white/90">285 Ipaja Road, Lagos, Nigeria</li>
             <li className="text-[#C8102E] font-mono font-bold">+234 803 858 7752</li>
           </ul>

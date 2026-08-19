@@ -48,7 +48,7 @@ export default function Layout({ children }: LayoutProps) {
 
           <div className="flex items-center space-x-4">
             <a 
-              href="https://wa.me/2348038587752?text=Hello%20KUNLAJ%20Autos,%20I'm%20inquiring%20from%20your%20platform." 
+              href="https://wa.me/2348038587752?text=Hello%20KUNLAJ%20Autos,%20I'm%20inquiring%20from%20kunlajautos.com.ng." 
               target="_blank" 
               rel="noopener noreferrer"
               className="hidden md:flex items-center space-x-2 text-[11px] font-bold tracking-wider uppercase px-5 py-2.5 transition-all shadow-md hover:shadow-xl bg-[#1A1A1A] text-[#FAFAFA] hover:bg-[#C8102E] hover:text-[#1A1A1A] group"
@@ -74,7 +74,7 @@ export default function Layout({ children }: LayoutProps) {
               <Link to="/service" onClick={() => setMobileMenuOpen(false)}>SERVICE DESK</Link>
               <Link to="/archive" onClick={() => setMobileMenuOpen(false)}>SUCCESS STORIES</Link>
               <a 
-                href="https://wa.me/2348038587752?text=Hello%20KUNLAJ%20Autos,%20I'm%20inquiring%20from%20your%20platform." 
+                href="https://wa.me/2348038587752?text=Hello%20KUNLAJ%20Autos,%20I'm%20inquiring%20from%20kunlajautos.com.ng." 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-[#C8102E] pt-4 border-t border-[#E5E8E6]"

@@ -39,19 +39,19 @@ export default function Home() {
                 <ArrowUpRight size={16} className="relative z-10 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </Link>
               <a 
-                href="https://jiji.ng/" 
+                href="https://wa.me/2348038587752?text=Hello%20KUNLAJ%20Autos,%20I'm%20inquiring%20from%20kunlajautos.com.ng." 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex justify-center items-center space-x-3 bg-white border-2 border-[#E5E8E6] text-[#1A1A1A] text-xs font-bold tracking-wider uppercase px-8 py-5 hover:border-[#C8102E] transition-colors shadow-lg group"
               >
-                <span>Visit our Jiji Store</span>
+                <span>Chat with an Agent</span>
                 <ArrowUpRight size={16} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform text-[#C8102E]" />
               </a>
             </div>
             
             <div className="flex items-center gap-2 text-xs font-mono text-[#C8102E] font-medium">
               <span className="flex items-center justify-center w-5 h-5 rounded-full bg-green-500/20 text-green-600 border border-green-500/30">✓</span>
-              Verified Enterprise Jiji Seller
+              Verified Enterprise Seller
             </div>
           </div>
         </div>
@@ -189,15 +189,15 @@ export default function Home() {
                <span className="text-xs font-mono font-bold tracking-widest uppercase ml-2 text-white">5.0 Seller Rating</span>
              </div>
              <h3 className="text-3xl md:text-4xl font-light tracking-wide text-white mb-4">Verified Enterprise Seller</h3>
-             <p className="text-sm md:text-base text-white/80 leading-relaxed font-light">Find KUNLAJ Autos on Jiji.ng. We maintain a perfect rating history backed by real Lagos customer reviews, transparent pricing, and 100% duty-cleared vehicles.</p>
+             <p className="text-sm md:text-base text-white/80 leading-relaxed font-light">Find KUNLAJ Autos on kunlajautos.com.ng. We maintain a perfect rating history backed by real Lagos customer reviews, transparent pricing, and 100% duty-cleared vehicles.</p>
            </div>
            <a 
-             href="https://jiji.ng/"
+             href="https://wa.me/2348038587752?text=Hello%20KUNLAJ%20Autos,%20I'm%20inquiring%20from%20kunlajautos.com.ng."
              target="_blank"
              rel="noopener noreferrer"
              className="px-10 py-5 bg-white text-[#1A1A1A] font-bold text-xs uppercase tracking-wider hover:bg-[#C8102E] hover:text-[#1A1A1A] transition-all shadow-[0_10px_30px_rgba(0,0,0,0.2)] flex items-center justify-center gap-3 group"
            >
-             Shop on Jiji <ArrowUpRight size={18} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+             Chat with an Agent <ArrowUpRight size={18} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
            </a>
         </div>
       </section>

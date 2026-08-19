@@ -20,9 +20,9 @@ export default function Legal() {
             <p>
               Our platform utilizes a streamlined intent-routing engine. When you request a vehicle quote, verify parts fitment via our Year-Make-Model (YMM) system, or book a service appointment, we collect explicit configuration details. This data is securely forwarded immediately to our centralized operations team via WhatsApp (+234 803 858 7752). Your connection is end-to-end encrypted under standard WhatsApp protocol. We do not store your communication data locally on our web servers.
             </p>
-            <h3 className="text-lg font-medium text-[#1A1A1A] pt-4 border-t border-[#E5E8E6]/50">2. Jiji Platform Integrations</h3>
+            <h3 className="text-lg font-medium text-[#1A1A1A] pt-4 border-t border-[#E5E8E6]/50">2. Platform Integrations</h3>
             <p>
-              As a Verified Enterprise Seller on Jiji, inquiries initiated on third-party platforms are governed by Jiji.ng's privacy agreements. KUNLAJ Autos acts on inquiries respectfully and promises full transparency regarding the condition, mileage, custom duties, and documentation of all vehicles.
+              As a Verified Enterprise Seller, inquiries initiated on our platforms are governed by kunlajautos.com.ng's privacy agreements. KUNLAJ Autos acts on inquiries respectfully and promises full transparency regarding the condition, mileage, custom duties, and documentation of all vehicles.
             </p>
           </div>
         </section>
