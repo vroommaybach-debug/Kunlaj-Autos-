@@ -23,6 +23,31 @@ export interface Car {
 
 export const cars: Car[] = [
   {
+    id: "hyundai-elantra-2008",
+    make: "Hyundai",
+    model: "Elantra",
+    year: 2008,
+    condition: "Standard",
+    status: "Working perfectly, good engine and gear, A/C working ok",
+    price: 3800000,
+    priceLabel: "₦3,800,000",
+    engine: {
+      type: "2.0L Inline-4",
+      displacement: "2.0L",
+      horsepower: "138 hp @ 6,000 rpm",
+      torque: "136 lb-ft @ 4,600 rpm",
+      transmission: "4-speed automatic",
+      fuelType: "Petrol",
+    },
+    images: [
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newhyundai01.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newhyundai02.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newhyundai03.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newhyundai04.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newhyundai05.jpeg"
+    ]
+  },
+  {
     id: "toyota-highlander-2016",
     make: "Toyota",
     model: "Highlander",
@@ -78,7 +103,9 @@ export const cars: Car[] = [
     model: "C300",
     year: 2016,
     condition: "Tokunbo, Standard",
-    status: "Working perfectly, good engine and gear, A/C working ok",
+    status: "Sold",
+    isSoldOut: true,
+    saleMessage: "SOLD OUT",
     price: 10800000,
     priceLabel: "₦10,800,000",
     engine: {

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { cars } from "../lib/carsData";
 
 const hiace = cars.find(c => c.id === 'toyota-hiace-2001');
+const benz = cars.find(c => c.id === 'mercedes-c300-2016');
 
 const SUCCESS_STORIES = [
   {
@@ -16,6 +17,16 @@ const SUCCESS_STORIES = [
     imageUrl: hiace?.images[0] || "",
     price: "₦ 7,800,000",
     date: "August 2026"
+  },
+  {
+    id: 2,
+    client: "Executive Client",
+    vehicle: "Mercedes-Benz C300 2016",
+    quote: "Working perfectly, good engine and gear, A/C working ok. Amazing comfort and style.",
+    context: "Sourced and delivered this premium Tokunbo C300 sedan directly to a client seeking luxury and reliable performance.",
+    imageUrl: benz?.images[1] || "",
+    price: "₦ 10,800,000",
+    date: "September 2026"
   }
 ];
 
