@@ -23,6 +23,31 @@ export interface Car {
 
 export const cars: Car[] = [
   {
+    id: "toyota-rav4-2007",
+    make: "Toyota",
+    model: "RAV4",
+    year: 2007,
+    condition: "Tokunbo Standard, Accident Free",
+    status: "Working perfectly, good engine and gear, A/C working ok",
+    price: 6800000,
+    priceLabel: "₦6,800,000",
+    engine: {
+      type: "2.4L Inline-4",
+      displacement: "2.4L",
+      horsepower: "166 hp @ 6,000 rpm",
+      torque: "165 lb-ft @ 4,000 rpm",
+      transmission: "4-speed automatic",
+      fuelType: "Petrol",
+    },
+    images: [
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/ravnew01.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/ravnew02.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/ravnew03.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/ravnew04.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/ravnew05.jpeg"
+    ]
+  },
+  {
     id: "hyundai-elantra-2008",
     make: "Hyundai",
     model: "Elantra",
