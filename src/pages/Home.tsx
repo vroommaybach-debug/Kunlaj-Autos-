@@ -7,18 +7,18 @@ export default function Home() {
   return (
     <div className="w-full bg-[#FAFAFA] overflow-hidden">
       {/* Layered Hero Section */}
-      <section className="relative w-full h-[85vh] lg:h-[90vh]">
+      <section className="relative w-full min-h-[100vh] lg:min-h-[90vh] flex flex-col justify-center py-20 lg:py-0">
         <div 
           className="absolute top-0 right-0 w-full lg:w-[85%] h-full bg-cover bg-center transition-transform duration-1000"
           style={{ backgroundImage: `url('${cars[2].images[1]}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/95 lg:via-[#FAFAFA]/60 to-[#1A1A1A]/20 z-10 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/90 lg:via-[#FAFAFA]/80 to-transparent z-10" />
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#C8102E] rounded-full blur-3xl opacity-20 z-10"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#1A1A1A] rounded-full blur-3xl opacity-20 z-10"></div>
+        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#C8102E] rounded-full blur-3xl opacity-20 z-10 pointer-events-none"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#1A1A1A] rounded-full blur-3xl opacity-20 z-10 pointer-events-none"></div>
         
-        <div className="relative z-20 h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center">
-          <div className="max-w-xl md:mt-20">
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row lg:items-end justify-between pt-16">
+          <div className="max-w-xl md:mt-12 lg:mb-20">
             <span className="inline-block text-[10px] items-center font-bold tracking-[0.2em] text-white bg-[#C8102E] uppercase mb-6 px-4 py-1.5 shadow-lg relative overflow-hidden group">
               <span className="relative z-10">Registered Dealership • Ipaja, Lagos</span>
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
@@ -54,23 +54,23 @@ export default function Home() {
               Verified Enterprise Seller
             </div>
           </div>
-        </div>
 
-        {/* Floating Glassmorphism Spec Card - Optimized for Mobile */}
-        <div className="absolute bottom-6 left-6 right-6 md:right-auto md:w-[340px] md:bottom-12 md:left-12 lg:left-24 z-30 bg-white/70 backdrop-blur-3xl border border-white p-4 shadow-[0_20px_50px_rgba(6,58,38,0.15)] overflow-hidden group cursor-pointer hover:bg-white transition-all transform hover:-translate-y-2">
-          <Link to="/showroom" className="block">
-            <div className="absolute top-0 left-0 w-1 h-full bg-[#1A1A1A]"></div>
-            <div className="flex gap-4 items-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FAFAFA] overflow-hidden shrink-0 border border-[#E5E8E6]">
-                <img src={cars[0].images[0]} alt={`${cars[0].make} ${cars[0].model}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          {/* Floating Glassmorphism Spec Card - Optimized for Mobile */}
+          <div className="mt-12 lg:mt-0 lg:mb-12 w-full sm:w-[340px] shrink-0 bg-white/70 backdrop-blur-3xl border border-white p-4 shadow-[0_20px_50px_rgba(6,58,38,0.15)] overflow-hidden group cursor-pointer hover:bg-white transition-all transform hover:-translate-y-2">
+            <Link to="/showroom" className="block">
+              <div className="absolute top-0 left-0 w-1 h-full bg-[#1A1A1A]"></div>
+              <div className="flex gap-4 items-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FAFAFA] overflow-hidden shrink-0 border border-[#E5E8E6]">
+                  <img src={cars[0].images[0]} alt={`${cars[0].make} ${cars[0].model}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                </div>
+                <div>
+                  <div className="text-[9px] md:text-[10px] font-mono tracking-widest text-[#C8102E] mb-1 font-bold">FEATURED SPEC</div>
+                  <div className="text-sm md:text-base font-semibold text-[#1A1A1A] tracking-wide truncate">{cars[0].make} {cars[0].model}</div>
+                  <div className="text-[10px] md:text-xs text-[#4A5F54] mt-1 font-medium truncate">{cars[0].condition}</div>
+                </div>
               </div>
-              <div>
-                <div className="text-[9px] md:text-[10px] font-mono tracking-widest text-[#C8102E] mb-1 font-bold">FEATURED SPEC</div>
-                <div className="text-sm md:text-base font-semibold text-[#1A1A1A] tracking-wide truncate">{cars[0].make} {cars[0].model}</div>
-                <div className="text-[10px] md:text-xs text-[#4A5F54] mt-1 font-medium truncate">{cars[0].condition}</div>
-              </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
       </section>
 

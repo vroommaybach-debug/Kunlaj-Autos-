@@ -23,6 +23,31 @@ export interface Car {
 
 export const cars: Car[] = [
   {
+    id: "toyota-tacoma-2004",
+    make: "Toyota",
+    model: "Tacoma",
+    year: 2004,
+    condition: "Tokunbo Standard, Accident Free",
+    status: "Working perfectly, good engine and gear, A/C working ok",
+    price: 8500000,
+    priceLabel: "₦8,500,000",
+    engine: {
+      type: "3.4L V6",
+      displacement: "3.4L",
+      horsepower: "190 hp @ 4,800 rpm",
+      torque: "220 lb-ft @ 3,600 rpm",
+      transmission: "4-speed automatic",
+      fuelType: "Petrol",
+    },
+    images: [
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newtacoma01.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newtacoma02.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newtacoma03.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newtacoma04.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/newtacoma05.jpeg"
+    ]
+  },
+  {
     id: "toyota-rav4-2007",
     make: "Toyota",
     model: "RAV4",
