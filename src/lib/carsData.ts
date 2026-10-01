@@ -23,6 +23,31 @@ export interface Car {
 
 export const cars: Car[] = [
   {
+    id: "toyota-hiace-cargo",
+    make: "Toyota",
+    model: "Hiace Cargo",
+    year: 2004,
+    condition: "Tokunbo Standard",
+    status: "Working perfectly with good engine and gear",
+    price: 7800000,
+    priceLabel: "₦7,800,000",
+    engine: {
+      type: "2.4L Inline-4 Petrol",
+      displacement: "2.4L",
+      horsepower: "140 hp @ 4,800 rpm",
+      torque: "210 Nm @ 3,600 rpm",
+      transmission: "5-speed manual",
+      fuelType: "Petrol",
+    },
+    images: [
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/bus1.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/bus2.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/bus3.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/bus4.jpeg",
+      "https://rir1tw7zermluiyr.public.blob.vercel-storage.com/bus5.jpeg"
+    ]
+  },
+  {
     id: "toyota-tacoma-2004",
     make: "Toyota",
     model: "Tacoma",
