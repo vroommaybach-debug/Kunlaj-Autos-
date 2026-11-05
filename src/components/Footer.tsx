@@ -44,6 +44,7 @@ export default function Footer() {
           <ul className="space-y-3 text-xs tracking-wide text-white/70">
             <li><Link to="/legal" className="hover:text-[#FAFAFA] transition-colors">Privacy Policy</Link></li>
             <li><Link to="/legal" className="hover:text-[#FAFAFA] transition-colors">Terms of Service</Link></li>
+            <li><Link to="/admin" className="hover:text-[#C8102E] transition-colors">Admin Portal</Link></li>
             <li><a href="https://wa.me/2348038587752" target="_blank" rel="noopener noreferrer" className="hover:text-[#FAFAFA] flex items-center gap-2 transition-colors"><span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span> Verified Enterprise Seller</a></li>
             <li className="pt-2 text-white/90">285 Ipaja Road, Lagos, Nigeria</li>
             <li className="text-[#C8102E] font-mono font-bold">+234 803 858 7752</li>
@@ -53,8 +54,8 @@ export default function Footer() {
       
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono tracking-widest text-white/50 uppercase relative z-10">
         <span>&copy; 2026 KUNLAJ AUTOS LTD. ALL RIGHTS RESERVED. IMAGINED BY JUNESTUDIO.</span>
-        <Link to="/admin" className="text-white/40 hover:text-[#C8102E] transition-colors">
-          Admin Studio (/admin)
+        <Link to="/admin" className="text-white/50 hover:text-[#C8102E] transition-colors">
+          Admin Access
         </Link>
       </div>
     </footer>

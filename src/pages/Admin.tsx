@@ -21,6 +21,7 @@ import {
   Sparkles,
   ArrowUpRight,
   X,
+  Lock,
 } from 'lucide-react';
 import { Car, cars as staticCars } from '../lib/carsData';
 import {
@@ -32,6 +33,9 @@ import {
   SUPABASE_SETUP_SQL,
 } from '../lib/inventoryService';
 import { supabase } from '../lib/supabase';
+
+const ADMIN_AUTH_SESSION_KEY = 'kunlaj_admin_auth_v1';
+const ADMIN_PASSCODE = 'Kunlajautos2026';
 
 const IMAGE_SLOT_LABELS = [
   '1. Primary Hero View (Front 3/4 Angle)',
@@ -96,6 +100,16 @@ const getInitialFormState = (): EmptyCarForm => ({
 });
 
 export default function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    try {
+      return sessionStorage.getItem(ADMIN_AUTH_SESSION_KEY) === 'true';
+    } catch {
+      return false;
+    }
+  });
+  const [passcodeInput, setPasscodeInput] = useState('');
+  const [passcodeError, setPasscodeError] = useState(false);
+
   const [inventory, setInventory] = useState<Car[]>([]);
   const [dataSource, setDataSource] = useState<'supabase' | 'cache' | 'static'>('static');
   const [connectionError, setConnectionError] = useState<string | null>(null);
@@ -347,6 +361,95 @@ export default function Admin() {
     setTimeout(() => setCopiedSql(false), 3000);
   };
 
+  const handlePasscodeSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passcodeInput === ADMIN_PASSCODE) {
+      setIsAuthenticated(true);
+      setPasscodeError(false);
+      setPasscodeInput('');
+      try {
+        sessionStorage.setItem(ADMIN_AUTH_SESSION_KEY, 'true');
+      } catch {
+        // ignore storage restrictions
+      }
+    } else {
+      setPasscodeError(true);
+      setPasscodeInput('');
+    }
+  };
+
+  const handleLockAdmin = () => {
+    setIsAuthenticated(false);
+    setPasscodeInput('');
+    try {
+      sessionStorage.removeItem(ADMIN_AUTH_SESSION_KEY);
+    } catch {
+      // ignore
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="w-full min-h-[82vh] bg-[#FAFAFA] flex items-center justify-center px-6 py-16">
+        <div className="w-full max-w-md bg-white border border-[#E5E8E6] p-8 md:p-10 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-[#C8102E]" />
+          <div className="w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center mb-6">
+            <Lock size={20} className="text-[#C8102E]" />
+          </div>
+
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-5 h-px bg-[#C8102E]"></span>
+            <span className="text-[10px] font-mono tracking-widest text-[#C8102E] uppercase font-bold">
+              RESTRICTED ACCESS
+            </span>
+          </div>
+
+          <h1 className="text-2xl font-light tracking-tight text-[#1A1A1A] mb-2">
+            Admin Inventory Studio
+          </h1>
+          <p className="text-xs text-[#4A5F54] mb-8 leading-relaxed">
+            Enter the authorized dealership passcode to manage vehicle listings, 5-angle galleries, and live inventory status.
+          </p>
+
+          <form onSubmit={handlePasscodeSubmit} className="space-y-5">
+            <div>
+              <label className="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#4A5F54] mb-2">
+                Security Passcode
+              </label>
+              <input
+                type="password"
+                required
+                autoFocus
+                autoComplete="new-password"
+                placeholder="••••••••••••••••"
+                value={passcodeInput}
+                onChange={(e) => {
+                  setPasscodeInput(e.target.value);
+                  if (passcodeError) setPasscodeError(false);
+                }}
+                className={`w-full bg-[#FAFAFA] border ${
+                  passcodeError ? 'border-[#C8102E]' : 'border-[#E5E8E6]'
+                } px-4 py-3.5 text-sm font-mono tracking-widest focus:bg-white focus:border-[#1A1A1A] outline-none`}
+              />
+              {passcodeError && (
+                <p className="text-[11px] font-mono text-[#C8102E] mt-2">
+                  Invalid passcode. Access denied.
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-4 bg-[#1A1A1A] hover:bg-[#C8102E] text-white text-xs font-bold tracking-widest uppercase transition-colors cursor-pointer shadow-lg"
+            >
+              Unlock Admin Studio
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full bg-[#F5F6F5] min-h-screen pb-24 text-[#1A1A1A]">
       {/* Toast Notification */}
@@ -412,6 +515,14 @@ export default function Admin() {
             >
               <Database size={15} />
               <span>{seeding ? 'Syncing...' : 'Sync All 11 Cars to Supabase'}</span>
+            </button>
+            <button
+              onClick={handleLockAdmin}
+              className="inline-flex items-center gap-2 px-4 py-3 bg-[#FAFAFA] border border-[#E5E8E6] hover:border-[#C8102E] hover:text-[#C8102E] text-xs font-bold tracking-wider uppercase transition-colors cursor-pointer"
+              title="Lock Admin Studio"
+            >
+              <Lock size={14} />
+              <span>Lock</span>
             </button>
           </div>
         </div>

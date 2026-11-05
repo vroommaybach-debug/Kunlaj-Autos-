@@ -20,6 +20,7 @@ export default function App() {
           <Route path="/archive" element={<SoldArchive />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/*" element={<Admin />} />
         </Routes>
       </Layout>
     </BrowserRouter>
