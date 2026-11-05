@@ -1,16 +1,55 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, MessageSquare, CarFront } from "lucide-react";
-import { cars } from "../lib/carsData";
+import { cars as defaultCars, Car } from "../lib/carsData";
+import { fetchInventory } from "../lib/inventoryService";
+import { supabase } from "../lib/supabase";
 import { generateKunaljLink } from "../lib/whatsapp";
 
 export default function Home() {
+  const [cars, setCars] = useState<Car[]>(defaultCars);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchInventory().then((res) => {
+      if (isMounted && res.cars.length > 0) {
+        setCars(res.cars);
+      }
+    });
+
+    const handleLocalUpdate = (e: any) => {
+      if (e.detail && Array.isArray(e.detail) && e.detail.length > 0) {
+        setCars(e.detail);
+      }
+    };
+    window.addEventListener("kunlaj-inventory-updated", handleLocalUpdate);
+
+    const channel = supabase
+      .channel("home-cars-live")
+      .on("postgres_changes", { event: "*", schema: "public", table: "cars" }, () => {
+        fetchInventory().then((res) => {
+          if (isMounted && res.cars.length > 0) setCars(res.cars);
+        });
+      })
+      .subscribe();
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener("kunlaj-inventory-updated", handleLocalUpdate);
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const featuredCar = cars.find((c) => !c.isSoldOut) || cars[0] || defaultCars[0];
+  const heroBgImage = cars[2]?.images?.[1] || defaultCars[2].images[1];
+
   return (
     <div className="w-full bg-[#FAFAFA] overflow-hidden">
       {/* Layered Hero Section */}
       <section className="relative w-full min-h-[100vh] lg:min-h-[90vh] flex flex-col justify-center py-20 lg:py-0">
         <div 
           className="absolute top-0 right-0 w-full lg:w-[85%] h-full bg-cover bg-center transition-transform duration-1000"
-          style={{ backgroundImage: `url('${cars[2].images[1]}')` }}
+          style={{ backgroundImage: `url('${heroBgImage}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/95 lg:via-[#FAFAFA]/60 to-[#1A1A1A]/20 z-10 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#FAFAFA] via-[#FAFAFA]/90 lg:via-[#FAFAFA]/80 to-transparent z-10" />
@@ -61,12 +100,12 @@ export default function Home() {
               <div className="absolute top-0 left-0 w-1 h-full bg-[#1A1A1A]"></div>
               <div className="flex gap-4 items-center">
                 <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FAFAFA] overflow-hidden shrink-0 border border-[#E5E8E6]">
-                  <img src={cars[0].images[0]} alt={`${cars[0].make} ${cars[0].model}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                  <img src={featuredCar.images[0]} alt={`${featuredCar.make} ${featuredCar.model}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
                 </div>
                 <div>
                   <div className="text-[9px] md:text-[10px] font-mono tracking-widest text-[#C8102E] mb-1 font-bold">FEATURED SPEC</div>
-                  <div className="text-sm md:text-base font-semibold text-[#1A1A1A] tracking-wide truncate">{cars[0].make} {cars[0].model}</div>
-                  <div className="text-[10px] md:text-xs text-[#4A5F54] mt-1 font-medium truncate">{cars[0].condition}</div>
+                  <div className="text-sm md:text-base font-semibold text-[#1A1A1A] tracking-wide truncate">{featuredCar.make} {featuredCar.model}</div>
+                  <div className="text-[10px] md:text-xs text-[#4A5F54] mt-1 font-medium truncate">{featuredCar.condition}</div>
                 </div>
               </div>
             </Link>

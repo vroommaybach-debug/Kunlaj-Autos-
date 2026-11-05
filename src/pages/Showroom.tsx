@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { generateKunaljLink } from '../lib/whatsapp';
 import { SlidersHorizontal, ArrowUpRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cars, Car } from '../lib/carsData';
+import { fetchInventory } from '../lib/inventoryService';
+import { supabase } from '../lib/supabase';
 
 function CarDetailModal({ car, onClose }: { car: Car; onClose: () => void }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -48,129 +50,172 @@ function CarDetailModal({ car, onClose }: { car: Car; onClose: () => void }) {
                   className="w-full h-full object-cover"
                 />
                 
-                {/* Arrows */}
-                <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ChevronLeft size={24} />
-                </button>
-                <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ChevronRight size={24} />
-                </button>
-              </>
-            ) : (
-              <div className="text-white/50 font-mono text-xs uppercase tracking-widest">Awaiting Images</div>
-            )}
-          </div>
-          
-          {/* Thumbnails */}
-          {car.images.length > 0 && (
-            <div className="flex gap-2 p-4 overflow-x-auto bg-[#FAFAFA] border-r border-[#E5E8E6]">
-              {car.images.map((img, idx) => (
-                <button 
-                  key={idx} 
-                  onClick={() => setActiveImageIndex(idx)}
-                  className={`relative flex-shrink-0 w-24 aspect-video overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-[#C8102E] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
-                >
-                  <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+                  {/* Arrows */}
+                  <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ChevronRight size={24} />
+                  </button>
 
-        {/* Details Section */}
-        <div className="w-full md:w-2/5 flex flex-col bg-white p-8">
-          <div className="mb-6">
-            <span className="text-[10px] font-bold font-mono tracking-widest text-[#C8102E] uppercase mb-2 block">{car.make} • {car.year}</span>
-            <h2 className="text-3xl font-light tracking-wide text-[#1A1A1A] mb-4">{car.model}</h2>
-            
-            {car.isSoldOut ? (
-              <div className="text-xl font-mono text-white bg-[#C8102E] px-4 py-2 font-bold tracking-wider mb-4 inline-block shadow-md">
-                {car.saleMessage || "SOLD OUT"}
-              </div>
-            ) : (
-              <div className="text-2xl font-mono text-[#C8102E] font-bold tracking-wider mb-4">
-                {car.priceLabel}
-              </div>
-            )}
-            
-            <div className="inline-block px-3 py-1 bg-[#1A1A1A]/5 border border-[#C8102E]/20 text-[10px] font-bold tracking-widest text-[#C8102E] uppercase mb-4">
-              {car.condition}
-            </div>
-            
-            <div className="space-y-4">
-              <p className="text-sm text-[#4A5F54] leading-relaxed border-l-2 border-[#C8102E] pl-4 italic">
-                {car.status}
-              </p>
-              {car.location && (
-                <div className="text-xs text-[#4A5F54] font-medium flex items-center gap-2">
-                  <span className="font-bold text-[#1A1A1A] uppercase tracking-wider">Location:</span> {car.location}
-                </div>
+                  {/* Per-Image Detailed Explanation Overlay */}
+                  {car.imageDescriptions && car.imageDescriptions[activeImageIndex] && (
+                    <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/75 to-transparent p-4 pt-8 text-white">
+                      <span className="text-[9px] font-mono tracking-widest uppercase text-[#C8102E] font-bold block mb-0.5">
+                        Angle {activeImageIndex + 1} of {car.images.length} • Inspection Note
+                      </span>
+                      <p className="text-xs sm:text-sm text-white/95 font-light leading-snug">
+                        {car.imageDescriptions[activeImageIndex]}
+                      </p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="text-white/50 font-mono text-xs uppercase tracking-widest">Awaiting Images</div>
               )}
             </div>
+            
+            {/* Thumbnails */}
+            {car.images.length > 0 && (
+              <div className="flex gap-2 p-4 overflow-x-auto bg-[#FAFAFA] border-r border-[#E5E8E6]">
+                {car.images.map((img, idx) => (
+                  <button 
+                    key={idx} 
+                    onClick={() => setActiveImageIndex(idx)}
+                    className={`relative flex-shrink-0 w-24 aspect-video overflow-hidden border-2 transition-all ${activeImageIndex === idx ? 'border-[#C8102E] opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                  >
+                    <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="flex-1 overflow-y-auto mb-8">
-            <h3 className="text-xs font-bold font-mono tracking-widest text-[#1A1A1A] uppercase mb-4 pb-2 border-b border-[#E5E8E6]">Engine Specifications</h3>
-            <div className="grid grid-cols-1 gap-y-4">
-              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
-                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Engine Type</span>
-                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.type}</span>
+          {/* Details Section */}
+          <div className="w-full md:w-2/5 flex flex-col bg-white p-8">
+            <div className="mb-6">
+              <span className="text-[10px] font-bold font-mono tracking-widest text-[#C8102E] uppercase mb-2 block">{car.make} • {car.year}</span>
+              <h2 className="text-3xl font-light tracking-wide text-[#1A1A1A] mb-4">{car.model}</h2>
+              
+              {car.isSoldOut ? (
+                <div className="text-xl font-mono text-white bg-[#C8102E] px-4 py-2 font-bold tracking-wider mb-4 inline-block shadow-md">
+                  {car.saleMessage || "SOLD OUT"}
+                </div>
+              ) : (
+                <div className="text-2xl font-mono text-[#C8102E] font-bold tracking-wider mb-4">
+                  {car.priceLabel}
+                </div>
+              )}
+              
+              <div className="inline-block px-3 py-1 bg-[#1A1A1A]/5 border border-[#C8102E]/20 text-[10px] font-bold tracking-widest text-[#C8102E] uppercase mb-4">
+                {car.condition}
               </div>
-              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
-                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Displacement</span>
-                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.displacement}</span>
-              </div>
-              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
-                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Horsepower</span>
-                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.horsepower}</span>
-              </div>
-              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
-                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Torque</span>
-                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.torque}</span>
-              </div>
-              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
-                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Transmission</span>
-                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.transmission}</span>
-              </div>
-              <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
-                <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Fuel Type</span>
-                <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.fuelType}</span>
+              
+              <div className="space-y-4">
+                <p className="text-sm text-[#4A5F54] leading-relaxed border-l-2 border-[#C8102E] pl-4 italic">
+                  {car.status}
+                </p>
+                {car.description && (
+                  <p className="text-xs text-[#1A1A1A]/80 leading-relaxed bg-[#FAFAFA] p-3.5 border border-[#E5E8E6]">
+                    {car.description}
+                  </p>
+                )}
+                {car.location && (
+                  <div className="text-xs text-[#4A5F54] font-medium flex items-center gap-2">
+                    <span className="font-bold text-[#1A1A1A] uppercase tracking-wider">Location:</span> {car.location}
+                  </div>
+                )}
               </div>
             </div>
-          </div>
 
-          <div className="mt-auto pt-6 border-t border-[#E5E8E6] flex flex-col gap-3">
-            <button 
-              onClick={() => {
-                  window.open(generateKunaljLink(car.isSoldOut ? "Similar Vehicle Request" : "Vehicle", `${car.year} ${car.make} ${car.model}`, `Condition: ${car.condition}, Price: ${car.priceLabel}`), '_blank');
-              }}
-              className={`w-full flex items-center justify-center text-[10px] font-bold tracking-wider text-white transition-all py-4 uppercase shadow-md group-hover:shadow-xl group ${car.isSoldOut ? 'bg-[#4A5F54] hover:bg-[#1A1A1A]' : 'bg-[#1A1A1A] hover:bg-[#C8102E] hover:text-[#1A1A1A]'}`}
-            >
-              <span className="mr-2">{car.isSoldOut ? "Inquire About Similar Vehicle" : "Send Inquiry to Agent"}</span>
-              <ArrowUpRight size={14} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </button>
+            <div className="flex-1 overflow-y-auto mb-8">
+              <h3 className="text-xs font-bold font-mono tracking-widest text-[#1A1A1A] uppercase mb-4 pb-2 border-b border-[#E5E8E6]">Engine Specifications</h3>
+              <div className="grid grid-cols-1 gap-y-4">
+                <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Engine Type</span>
+                  <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.type}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Displacement</span>
+                  <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.displacement}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Horsepower</span>
+                  <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.horsepower}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Torque</span>
+                  <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.torque}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Transmission</span>
+                  <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.transmission}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E5E8E6]/50 pb-2">
+                  <span className="text-[10px] font-bold font-mono tracking-widest text-[#4A5F54] uppercase">Fuel Type</span>
+                  <span className="text-xs font-medium text-[#1A1A1A] text-right">{car.engine.fuelType}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-auto pt-6 border-t border-[#E5E8E6] flex flex-col gap-3">
+              <button 
+                onClick={() => {
+                    window.open(generateKunaljLink(car.isSoldOut ? "Similar Vehicle Request" : "Vehicle", `${car.year} ${car.make} ${car.model}`, `Condition: ${car.condition}, Price: ${car.priceLabel}`), '_blank');
+                }}
+                className={`w-full flex items-center justify-center text-[10px] font-bold tracking-wider text-white transition-all py-4 uppercase shadow-md group-hover:shadow-xl group ${car.isSoldOut ? 'bg-[#4A5F54] hover:bg-[#1A1A1A]' : 'bg-[#1A1A1A] hover:bg-[#C8102E] hover:text-[#1A1A1A]'}`}
+              >
+                <span className="mr-2">{car.isSoldOut ? "Inquire About Similar Vehicle" : "Send Inquiry to Agent"}</span>
+                <ArrowUpRight size={14} className="transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-export default function Showroom() {
-  const [vehicles, setVehicles] = useState<Car[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-  
-  // Filter States
-  const [conditionFilter, setConditionFilter] = useState<'All' | 'Brand New' | 'Tokunbo'>('All');
-  const [makeFilter, setMakeFilter] = useState<string>('All');
-  const [priceFilter, setPriceFilter] = useState<string>('All');
+  export default function Showroom() {
+    const [vehicles, setVehicles] = useState<Car[]>(cars);
+    const [loading, setLoading] = useState(true);
+    const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+    
+    // Filter States
+    const [conditionFilter, setConditionFilter] = useState<'All' | 'Brand New' | 'Tokunbo'>('All');
+    const [makeFilter, setMakeFilter] = useState<string>('All');
+    const [priceFilter, setPriceFilter] = useState<string>('All');
 
-  useEffect(() => {
-    // Replaced supabase fetch with local data import
-    setVehicles(cars);
-    setLoading(false);
-  }, []);
+    useEffect(() => {
+      let isMounted = true;
+      const syncInventory = async () => {
+        const res = await fetchInventory();
+        if (isMounted) {
+          setVehicles(res.cars);
+          setLoading(false);
+        }
+      };
+      syncInventory();
+
+      const handleLocalUpdate = (e: any) => {
+        if (e.detail && Array.isArray(e.detail)) {
+          setVehicles(e.detail);
+        }
+      };
+      window.addEventListener('kunlaj-inventory-updated', handleLocalUpdate);
+
+      const channel = supabase
+        .channel('showroom-cars-live')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'cars' }, () => {
+          syncInventory();
+        })
+        .subscribe();
+
+      return () => {
+        isMounted = false;
+        window.removeEventListener('kunlaj-inventory-updated', handleLocalUpdate);
+        supabase.removeChannel(channel);
+      };
+    }, []);
 
   const filteredVehicles = vehicles.filter(v => {
     const vCond = v.condition ? v.condition.toLowerCase() : '';

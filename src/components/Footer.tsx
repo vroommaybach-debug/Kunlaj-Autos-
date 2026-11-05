@@ -51,8 +51,11 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center text-[10px] font-mono tracking-widest text-white/50 uppercase relative z-10">
-        &copy; 2026 KUNLAJ AUTOS LTD. ALL RIGHTS RESERVED. IMAGINED BY JUNESTUDIO.
+      <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono tracking-widest text-white/50 uppercase relative z-10">
+        <span>&copy; 2026 KUNLAJ AUTOS LTD. ALL RIGHTS RESERVED. IMAGINED BY JUNESTUDIO.</span>
+        <Link to="/admin" className="text-white/40 hover:text-[#C8102E] transition-colors">
+          Admin Studio (/admin)
+        </Link>
       </div>
     </footer>
   );

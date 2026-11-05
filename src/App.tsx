@@ -6,6 +6,7 @@ import PartsCenter from "./pages/PartsCenter";
 import ServiceDesk from "./pages/ServiceDesk";
 import Legal from "./pages/Legal";
 import SoldArchive from "./pages/SoldArchive";
+import Admin from "./pages/Admin";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/service" element={<ServiceDesk />} />
           <Route path="/archive" element={<SoldArchive />} />
           <Route path="/legal" element={<Legal />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </Layout>
     </BrowserRouter>

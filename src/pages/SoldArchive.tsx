@@ -1,41 +1,65 @@
 import { motion, useScroll, useTransform } from "motion/react";
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { ArrowUpRight, MessageCircle, Star } from "lucide-react";
 import { Link } from "react-router-dom";
-import { cars } from "../lib/carsData";
-
-const hiace = cars.find(c => c.id === 'toyota-hiace-2001');
-const benz = cars.find(c => c.id === 'mercedes-c300-2016');
-
-const SUCCESS_STORIES = [
-  {
-    id: 1,
-    client: "Verified Buyer",
-    vehicle: "Toyota Hiace 2001",
-    quote: "A perfectly working engine and a seamless transaction. Very satisfied with the reliable delivery.",
-    context: "Sourced for a client who needed a dependable commercial bus. We delivered this foreign-used Hiace in excellent mechanical condition.",
-    imageUrl: hiace?.images[0] || "",
-    price: "₦ 7,800,000",
-    date: "August 2026"
-  },
-  {
-    id: 2,
-    client: "Executive Client",
-    vehicle: "Mercedes-Benz C300 2016",
-    quote: "Working perfectly, good engine and gear, A/C working ok. Amazing comfort and style.",
-    context: "Sourced and delivered this premium Tokunbo C300 sedan directly to a client seeking luxury and reliable performance.",
-    imageUrl: benz?.images[1] || "",
-    price: "₦ 10,800,000",
-    date: "September 2026"
-  }
-];
+import { cars as defaultCars, Car } from "../lib/carsData";
+import { fetchInventory } from "../lib/inventoryService";
+import { supabase } from "../lib/supabase";
 
 export default function SoldArchive() {
+  const [inventory, setInventory] = useState<Car[]>(defaultCars);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchInventory().then((res) => {
+      if (isMounted && res.cars.length > 0) setInventory(res.cars);
+    });
+
+    const handleLocalUpdate = (e: any) => {
+      if (e.detail && Array.isArray(e.detail)) setInventory(e.detail);
+    };
+    window.addEventListener("kunlaj-inventory-updated", handleLocalUpdate);
+
+    const channel = supabase
+      .channel("archive-cars-live")
+      .on("postgres_changes", { event: "*", schema: "public", table: "cars" }, () => {
+        fetchInventory().then((res) => {
+          if (isMounted && res.cars.length > 0) setInventory(res.cars);
+        });
+      })
+      .subscribe();
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener("kunlaj-inventory-updated", handleLocalUpdate);
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const soldCars = inventory.filter((c) => c.isSoldOut);
+  const dynamicStories = soldCars.map((car, index) => ({
+    id: car.id || index + 1,
+    client: car.id === "mercedes-c300-2016" ? "Executive Client" : "Verified Buyer",
+    vehicle: `${car.make} ${car.model} ${car.year}`,
+    quote:
+      car.id === "toyota-hiace-2001"
+        ? "A perfectly working engine and a seamless transaction. Very satisfied with the reliable delivery."
+        : car.description || `${car.status}. Delivered in pristine mechanical condition.`,
+    context:
+      car.id === "toyota-hiace-2001"
+        ? "Sourced for a client who needed a dependable commercial bus. We delivered this foreign-used Hiace in excellent mechanical condition."
+        : car.id === "mercedes-c300-2016"
+        ? "Sourced and delivered this premium Tokunbo C300 sedan directly to a client seeking luxury and reliable performance."
+        : `Sourced and delivered this ${car.condition} ${car.make} ${car.model} directly from our showroom floor to a verified Kunlaj Autos client.`,
+    imageUrl: car.images?.[0] || "",
+    price: car.priceLabel,
+    date: car.id === "toyota-hiace-2001" ? "August 2026" : "Verified Delivery",
+  }));
 
   return (
     <div ref={containerRef} className="w-full bg-[#1A1A1A] min-h-screen text-white relative">
@@ -44,7 +68,7 @@ export default function SoldArchive() {
         <motion.div 
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url('${cars[3].images[1]}')`,
+            backgroundImage: `url('${defaultCars[3]?.images?.[1] || ""}')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             opacity: useTransform(scrollYProgress, [0, 0.2], [0.5, 0])
@@ -94,7 +118,7 @@ export default function SoldArchive() {
 
       {/* Cinematic Sections */}
       <div className="relative z-30 bg-[#1A1A1A]">
-        {SUCCESS_STORIES.map((story, idx) => (
+        {dynamicStories.map((story, idx) => (
           <StorySection key={story.id} story={story} index={idx} />
         ))}
       </div>

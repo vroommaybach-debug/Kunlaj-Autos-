@@ -61,10 +61,15 @@ export default function PartsCenter() {
       }
       
       const { data, error } = await query;
-      if (!error && data) {
-        setParts(data);
+      if (!error && data && data.length > 0) {
+        const existingNames = new Set(data.map((p: Part) => p.name.toLowerCase()));
+        const merged = [
+          ...data,
+          ...placeholderParts.filter((p) => !existingNames.has(p.name.toLowerCase())),
+        ];
+        setParts(merged);
       } else {
-        setParts([]);
+        setParts(placeholderParts);
       }
       setLoading(false);
     }

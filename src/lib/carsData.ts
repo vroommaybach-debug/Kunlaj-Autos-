@@ -16,9 +16,12 @@ export interface Car {
     fuelType: string;
   };
   images: string[];
+  imageDescriptions?: string[];
+  description?: string;
   isSoldOut?: boolean;
   saleMessage?: string;
   location?: string;
+  createdAt?: string;
 }
 
 export const cars: Car[] = [
@@ -73,7 +76,7 @@ export const cars: Car[] = [
     ]
   },
   {
-    id: "toyota-rav4-2007",
+    id: "toyota-rav4-2007-tokunbo",
     make: "Toyota",
     model: "RAV4",
     year: 2007,
